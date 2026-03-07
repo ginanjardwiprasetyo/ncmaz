@@ -30,18 +30,7 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	likeCount: likeCountProp = 34,
 	postDatabseId,
 }) => {
-	//const [likeCountState, setLikeCountState] = useState(likeCountProp)
-	const [likeCountState, setLikeCountState] = useState(() => {
-  if (typeof window !== "undefined") {
-    const saved = localStorage.getItem("like_" + postDatabseId)
-    if (saved) return Number(saved)
-  }
-  return likeCountProp
-})
-	const updateLike = (value:number)=>{
-  setLikeCountState(value)
-  localStorage.setItem("like_"+postDatabseId,value.toString())
-}
+	const [likeCountState, setLikeCountState] = useState(likeCountProp)
 	const { openLoginModal } = useLoginModal()
 	//
 	const [handleUpdateReactionCount, { loading, error, data, called }] =
@@ -144,29 +133,14 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	//
 
 	// check is isLiked
-	//const isLiked = useMemo(() => {
-		// for user logged in
-		//return viewerReactionPosts?.some(
-			//(post) =>
-				//post.title?.trim() == `${postDatabseId},LIKE` &&
-				//!post.isNewUnLikeFromClient,
-		//)
-	//}, [viewer, viewerReactionPosts])
-	//
 	const isLiked = useMemo(() => {
-  // guest mode
-  if (!isAuthenticated) {
-    if (typeof window === "undefined") return false
-    return localStorage.getItem("liked_" + postDatabseId) === "1"
-  }
-
-  // logged user
-  return viewerReactionPosts?.some(
-    (post) =>
-      post.title?.trim() == `${postDatabseId},LIKE` &&
-      !post.isNewUnLikeFromClient,
-  )
-}, [viewerReactionPosts, isAuthenticated, postDatabseId])
+		for user logged in
+		return viewerReactionPosts?.some(
+			(post) =>
+				post.title?.trim() == `${postDatabseId},LIKE` &&
+				!post.isNewUnLikeFromClient,
+		)
+	}, [viewer, viewerReactionPosts])
 
 	// handle update viewerReactionPosts to redux store
 	useEffect(() => {
@@ -198,29 +172,15 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 			return
 		}
 
-		//if (isAuthenticated === false) {
-			//openLoginModal()
-			//return
-		//}
-		// allow guest like
-if (!isAuthenticated) {
-  const newLiked = !isLiked
+		if (isAuthenticated === false) {
+			openLoginModal()
+			return
+		}
 
-  localStorage.setItem("liked_" + postDatabseId, newLiked ? "1" : "0")
-
-  setLikeCountState((prev) => (newLiked ? prev + 1 : Math.max(prev - 1, 0)))
-
-  return
-}
-
-		//if (!viewer?.databaseId) {
-			//toast.error('Please wait a moment, data is being prepared.')
-			//return
-		//}
 		if (!viewer?.databaseId) {
-  setLikeCountState(isLiked ? likeCountState - 1 : likeCountState + 1)
-  return
-}
+			toast.error('Please wait a moment, data is being prepared.')
+			return
+		}
 
 		// check isload like count from server
 		const loadingDOM = document.querySelectorAll(
