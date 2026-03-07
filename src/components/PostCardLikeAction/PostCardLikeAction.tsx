@@ -134,13 +134,14 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 
 	// check is isLiked
 	const isLiked = useMemo(() => {
-		for user logged in
+		// for user logged in
 		return viewerReactionPosts?.some(
 			(post) =>
 				post.title?.trim() == `${postDatabseId},LIKE` &&
 				!post.isNewUnLikeFromClient,
 		)
 	}, [viewer, viewerReactionPosts])
+	//
 
 	// handle update viewerReactionPosts to redux store
 	useEffect(() => {
