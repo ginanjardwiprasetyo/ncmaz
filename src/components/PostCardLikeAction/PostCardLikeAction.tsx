@@ -30,7 +30,18 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	likeCount: likeCountProp = 34,
 	postDatabseId,
 }) => {
-	const [likeCountState, setLikeCountState] = useState(likeCountProp)
+	//const [likeCountState, setLikeCountState] = useState(likeCountProp)
+	const [likeCountState, setLikeCountState] = useState(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("like_" + postDatabseId)
+    if (saved) return Number(saved)
+  }
+  return likeCountProp
+})
+	const updateLike = (value:number)=>{
+  setLikeCountState(value)
+  localStorage.setItem("like_"+postDatabseId,value.toString())
+}
 	const { openLoginModal } = useLoginModal()
 	//
 	const [handleUpdateReactionCount, { loading, error, data, called }] =
@@ -173,15 +184,24 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 			return
 		}
 
-		if (isAuthenticated === false) {
-			openLoginModal()
-			return
-		}
+		//if (isAuthenticated === false) {
+			//openLoginModal()
+			//return
+		//}
+		// allow guest like
+if (isAuthenticated === false) {
+  setLikeCountState(isLiked ? likeCountState - 1 : likeCountState + 1)
+  return
+}
 
+		//if (!viewer?.databaseId) {
+			//toast.error('Please wait a moment, data is being prepared.')
+			//return
+		//}
 		if (!viewer?.databaseId) {
-			toast.error('Please wait a moment, data is being prepared.')
-			return
-		}
+  setLikeCountState(isLiked ? likeCountState - 1 : likeCountState + 1)
+  return
+}
 
 		// check isload like count from server
 		const loadingDOM = document.querySelectorAll(
