@@ -144,15 +144,29 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	//
 
 	// check is isLiked
-	const isLiked = useMemo(() => {
+	//const isLiked = useMemo(() => {
 		// for user logged in
-		return viewerReactionPosts?.some(
-			(post) =>
-				post.title?.trim() == `${postDatabseId},LIKE` &&
-				!post.isNewUnLikeFromClient,
-		)
-	}, [viewer, viewerReactionPosts])
+		//return viewerReactionPosts?.some(
+			//(post) =>
+				//post.title?.trim() == `${postDatabseId},LIKE` &&
+				//!post.isNewUnLikeFromClient,
+		//)
+	//}, [viewer, viewerReactionPosts])
 	//
+	const isLiked = useMemo(() => {
+  // guest mode
+  if (!isAuthenticated) {
+    if (typeof window === "undefined") return false
+    return localStorage.getItem("liked_" + postDatabseId) === "1"
+  }
+
+  // logged user
+  return viewerReactionPosts?.some(
+    (post) =>
+      post.title?.trim() == `${postDatabseId},LIKE` &&
+      !post.isNewUnLikeFromClient,
+  )
+}, [viewerReactionPosts, isAuthenticated, postDatabseId])
 
 	// handle update viewerReactionPosts to redux store
 	useEffect(() => {
@@ -189,8 +203,13 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 			//return
 		//}
 		// allow guest like
-if (isAuthenticated === false) {
-  setLikeCountState(isLiked ? likeCountState - 1 : likeCountState + 1)
+if (!isAuthenticated) {
+  const newLiked = !isLiked
+
+  localStorage.setItem("liked_" + postDatabseId, newLiked ? "1" : "0")
+
+  setLikeCountState((prev) => (newLiked ? prev + 1 : Math.max(prev - 1, 0)))
+
   return
 }
 
