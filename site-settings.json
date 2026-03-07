@@ -170,7 +170,7 @@
 		"title": "Lost your password?",
 		"sub_title": "Enter your email below to reset your password.",
 		"blockquote": {
-			"text": "This theme has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.",
+			"text": "Belajarlah setiap saat hingga kamu berhenti karena tidak bisa bernapas.",
 			"author": "Rekayasa Sipil"
 		}
 	},
@@ -192,7 +192,7 @@
 		"lost_password": {
 			"is_use_lostpassword_default_of_wp": false,
 			"message": "Lost password not implemented yet! Please contact admmin for support.",
-			"url_lostpassword_default_of_wp": "https://yourwebsite.com/wp-login.php?action=lostpassword"
+			"url_lostpassword_default_of_wp": "https://rekayasa-sipil.my.id/wp-login.php?action=lostpassword"
 		}
 	},
 	"mobile_nav_sidebar": {
