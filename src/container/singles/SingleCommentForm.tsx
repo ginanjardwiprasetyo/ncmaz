@@ -111,9 +111,8 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
 
 				// check if user is not logged in and must_logged_in_to_comment is false
 				if (!isAuthenticated && !mustLoggedToComment) {
-					// check if user fill in the name and email
-					if (!email || !username) {
-						toast.error(T['Username and email are required'] + '!')
+					if (!username) {
+						toast.error(T['Username is required'] + '!')
 						return
 					}
 				}
@@ -153,15 +152,14 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
 						/>
 					</div>
 					<div className="grid gap-1.5">
-						<Label htmlFor="email">{T.Email}*</Label>
+						<Label htmlFor="email">{T.Email}</Label>
 						<Input
 							id="email"
 							autoCapitalize="none"
 							autoComplete="email"
 							autoCorrect="off"
 							type="email"
-							placeholder="hello@123.mail"
-							required
+							placeholder="hello@123.mail (optional)"
 						/>
 					</div>
 				</div>

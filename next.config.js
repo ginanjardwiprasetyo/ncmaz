@@ -1,5 +1,7 @@
-const { withFaust, getWpHostname } = require('@faustwp/core')
+const { withFaust } = require('@faustwp/core')
 const { createSecureHeaders } = require('next-secure-headers')
+
+const WP_HOSTNAME = process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\//, '') || 'dev-rekayasa.pantheonsite.io'
 
 /**
  * @type {import('next').NextConfig}
@@ -20,13 +22,13 @@ module.exports = withFaust({
 			},
 			{
 				protocol: 'http',
-				hostname: getWpHostname(),
+				hostname: WP_HOSTNAME,
 				port: '',
 				pathname: '/**',
 			},
 			{
 				protocol: 'https',
-				hostname: getWpHostname(),
+				hostname: WP_HOSTNAME,
 				port: '',
 				pathname: '/**',
 			},

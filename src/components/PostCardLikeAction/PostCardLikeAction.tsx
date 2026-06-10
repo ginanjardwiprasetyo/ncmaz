@@ -12,10 +12,37 @@ import {
 	NcmazFcUserReactionPostUpdateResuiltEnum,
 } from '@/__generated__/graphql'
 import { updateViewerAllReactionPosts } from '@/stores/viewer/viewerSlice'
-import { useLoginModal } from '@/hooks/useLoginModal'
 
 import toast from 'react-hot-toast'
 import { FavouriteIcon } from '../Icons/Icons'
+
+const LS_KEY_LIKED = 'ncmaz_anonymous_liked'
+
+function getLikedFromLS(): number[] {
+	try {
+		const raw = localStorage.getItem(LS_KEY_LIKED)
+		return raw ? JSON.parse(raw) : []
+	} catch {
+		return []
+	}
+}
+
+function toggleLikedInLS(postId: number): boolean {
+	const liked = getLikedFromLS()
+	const idx = liked.indexOf(postId)
+	if (idx > -1) {
+		liked.splice(idx, 1)
+		localStorage.setItem(LS_KEY_LIKED, JSON.stringify(liked))
+		return false
+	}
+	liked.push(postId)
+	localStorage.setItem(LS_KEY_LIKED, JSON.stringify(liked))
+	return true
+}
+
+function isLikedInLS(postId: number): boolean {
+	return getLikedFromLS().includes(postId)
+}
 
 export interface PostCardLikeActionProps {
 	className?: string
@@ -31,7 +58,7 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	postDatabseId,
 }) => {
 	const [likeCountState, setLikeCountState] = useState(likeCountProp)
-	const { openLoginModal } = useLoginModal()
+	const [likedAnon, setLikedAnon] = useState(() => isLikedInLS(postDatabseId))
 	//
 	const [handleUpdateReactionCount, { loading, error, data, called }] =
 		useMutation(NC_MUTATION_UPDATE_USER_REACTION_POST_COUNT)
@@ -134,18 +161,20 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 
 	// check is isLiked
 	const isLiked = useMemo(() => {
-		// for user logged in
-		return viewerReactionPosts?.some(
-			(post) =>
-				post.title?.trim() == `${postDatabseId},LIKE` &&
-				!post.isNewUnLikeFromClient,
-		)
-	}, [viewer, viewerReactionPosts])
+		if (isAuthenticated) {
+			return viewerReactionPosts?.some(
+				(post) =>
+					post.title?.trim() == `${postDatabseId},LIKE` &&
+					!post.isNewUnLikeFromClient,
+			)
+		}
+		return likedAnon
+	}, [viewer, viewerReactionPosts, isAuthenticated, likedAnon, postDatabseId])
 	//
 
 	// handle update viewerReactionPosts to redux store
 	useEffect(() => {
-		if (loading || !isReady) {
+		if (loading || !isReady || !isAuthenticated) {
 			return
 		}
 
@@ -173,48 +202,54 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 			return
 		}
 
-		if (isAuthenticated === false) {
-			openLoginModal()
-			return
+		if (isAuthenticated) {
+			if (!viewer?.databaseId) {
+				toast.error('Please wait a moment, data is being prepared.')
+				return
+			}
+
+			// check isload like count from server
+			const loadingDOM = document.querySelectorAll(
+				'.getPostsNcmazMetaByIds_is_loading',
+			)
+			if (!!loadingDOM?.length) {
+				toast.error('Please wait a moment, data is being refreshed.')
+				return
+			}
+
+			// dispatch pre update viewer reaction posts -> when prepare update to server
+			handleDispatchUpdateViewerReactionPosts(
+				postDatabseId,
+				isLiked
+					? NcmazFcUserReactionPostUpdateResuiltEnum.Removed
+					: NcmazFcUserReactionPostUpdateResuiltEnum.Added,
+			)
+
+			//  update like count for database
+			handleUpdateReactionCount({
+				variables: {
+					post_id: postDatabseId,
+					user_id: viewer.databaseId,
+					reaction: NcmazFcUserReactionPostActionEnum.Like,
+					number: isLiked
+						? NcmazFcUserReactionPostNumberUpdateEnum.Remove_1
+						: NcmazFcUserReactionPostNumberUpdateEnum.Add_1,
+				},
+			})
+		} else {
+			const nowLiked = toggleLikedInLS(postDatabseId)
+			setLikedAnon(nowLiked)
+			setLikeCountState((prev) =>
+				nowLiked ? prev + 1 : prev > 0 ? prev - 1 : 0,
+			)
 		}
-
-		if (!viewer?.databaseId) {
-			toast.error('Please wait a moment, data is being prepared.')
-			return
-		}
-
-		// check isload like count from server
-		const loadingDOM = document.querySelectorAll(
-			'.getPostsNcmazMetaByIds_is_loading',
-		)
-		if (!!loadingDOM?.length) {
-			toast.error('Please wait a moment, data is being refreshed.')
-			return
-		}
-
-		// dispatch pre update viewer reaction posts -> when prepare update to server. Will have a update again when have result from server
-		handleDispatchUpdateViewerReactionPosts(
-			postDatabseId,
-			isLiked
-				? NcmazFcUserReactionPostUpdateResuiltEnum.Removed
-				: NcmazFcUserReactionPostUpdateResuiltEnum.Added,
-		)
-
-		//  update like count for database
-		handleUpdateReactionCount({
-			variables: {
-				post_id: postDatabseId,
-				user_id: viewer.databaseId,
-				reaction: NcmazFcUserReactionPostActionEnum.Like,
-				number: isLiked
-					? NcmazFcUserReactionPostNumberUpdateEnum.Remove_1
-					: NcmazFcUserReactionPostNumberUpdateEnum.Add_1,
-			},
-		})
 	}
 
 	// handle update like count when have update from store
 	const actualLikeCount = useMemo(() => {
+		if (!isAuthenticated) {
+			return likeCountState
+		}
 		if (!viewerReactionPosts?.length) {
 			return likeCountState
 		}
@@ -225,7 +260,7 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 			return viewerReactionPost?.newLikedCount
 		}
 		return likeCountState
-	}, [likeCountState, viewerReactionPosts])
+	}, [likeCountState, viewerReactionPosts, isAuthenticated])
 
 	return (
 		<button
