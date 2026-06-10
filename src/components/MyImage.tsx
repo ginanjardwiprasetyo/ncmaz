@@ -11,9 +11,11 @@ const MyImage: FC<Props> = ({
 	defaultPlaceholderDataUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8+vx1PQAIqAM4jZDFJQAAAABJRU5ErkJggg==',
 	...props
 }) => {
+	const isExternal = typeof props.src === 'string' && props.src.startsWith('http')
 	return (
 		<Image
 			{...props}
+			unoptimized={isExternal || props.unoptimized}
 			className={`${props.className} ${
 				props.src ? '' : 'dark:brightness-75 dark:filter'
 			}`}
