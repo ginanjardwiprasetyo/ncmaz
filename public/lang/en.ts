@@ -13,6 +13,7 @@ export default {
 	'Creating comment': 'Creating comment',
 	'Create comment successfully': 'Create comment successfully',
 	'Username and email are required': 'Username and email are required',
+	'Username is required': 'Username is required',
 	read: 'read',
 	'min read': 'min read',
 	'Read more': 'Read more',
