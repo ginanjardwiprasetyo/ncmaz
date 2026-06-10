@@ -1,7 +1,7 @@
 const { withFaust } = require('@faustwp/core')
 const { createSecureHeaders } = require('next-secure-headers')
 
-const WP_HOSTNAME = (process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\//, '').replace(/\/+$/, '')) || 'dev-rekayasa.pantheonsite.io'
+const WP_HOSTNAME = (process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\//, '').replace(/\/+$/, '')) || 'live-rekayasa.pantheonsite.io'
 
 /**
  * @type {import('next').NextConfig}
