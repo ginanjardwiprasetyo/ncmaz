@@ -12,6 +12,7 @@ import {
 	NcmazFcUserReactionPostUpdateResuiltEnum,
 } from '@/__generated__/graphql'
 import { updateViewerAllReactionPosts } from '@/stores/viewer/viewerSlice'
+import { updateAnonymousLikeCount } from '@/utils/updateAnonymousLikeCount'
 
 import toast from 'react-hot-toast'
 import { FavouriteIcon } from '../Icons/Icons'
@@ -191,12 +192,11 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 				NcmazFcUserReactionPostUpdateResuiltEnum.Error,
 				data?.ncmazFaustUpdateUserReactionPostCount?.number,
 			)
-			return
 		}
-	}, [data, error, loading, isReady])
+	}, [data, error, loading, isReady, isAuthenticated])
 
 	// handle click like action
-	const handleClickAction = () => {
+	const handleClickAction = async () => {
 		if (!isReady) {
 			toast.error('Please wait a moment, data is being prepared.')
 			return
@@ -242,6 +242,26 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 			setLikeCountState((prev) =>
 				nowLiked ? prev + 1 : prev > 0 ? prev - 1 : 0,
 			)
+
+			//  update like count for database (anonymous user)
+			try {
+				const result = await updateAnonymousLikeCount(
+					postDatabseId,
+					nowLiked ? 'ADD_1' : 'REMOVE_1',
+				)
+				if (!result) {
+					throw new Error('No result from server')
+				}
+			} catch (err) {
+				console.log('___PostCardLikeAction___anon_error', err)
+				// roll back optimistic like
+				toggleLikedInLS(postDatabseId)
+				setLikedAnon(nowLiked ? false : true)
+				setLikeCountState((prev) =>
+					nowLiked ? (prev > 0 ? prev - 1 : 0) : prev + 1,
+				)
+				toast.error('An error occurred, please try again later.')
+			}
 		}
 	}
 

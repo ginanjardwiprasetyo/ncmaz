@@ -28,6 +28,7 @@ export default async function handler(
     const { data, error, errors } = await client
       .query({
         query: GET_POSTS_NCMAZ_META_BY_IDS,
+        fetchPolicy: "network-only",
         variables: {
           in: IDS,
         },
