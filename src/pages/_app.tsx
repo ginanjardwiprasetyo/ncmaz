@@ -24,10 +24,42 @@ const poppins = Poppins({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter()
+	const statsigKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY
 
 	const user = {
 		userID: 'a-user',
 	}
+
+	const app = (
+		<FaustProvider pageProps={pageProps}>
+			<WordPressBlocksProvider
+				config={{
+					blocks,
+					theme: fromThemeJson(themeJson),
+				}}
+			>
+				<SiteWrapperProvider {...pageProps}>
+					<style jsx global>{`
+						html {
+							font-family: ${poppins.style.fontFamily};
+						}
+					`}</style>
+					<NextNProgress color="#818cf8" />
+					<Component {...pageProps} key={router.asPath} />
+					<Toaster
+						position="bottom-left"
+						toastOptions={{
+							style: {
+								fontSize: '14px',
+								borderRadius: '0.75rem',
+							},
+						}}
+						containerClassName="text-sm"
+					/>
+				</SiteWrapperProvider>
+			</WordPressBlocksProvider>
+		</FaustProvider>
+	)
 
 	return (
 		<>
@@ -35,40 +67,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 			<SpeedInsights/>
 
-			<StatsigProvider
-				sdkKey={process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY!}
-				user={user}
-				options={{ logLevel: LogLevel.Debug }}
-			>
-				<FaustProvider pageProps={pageProps}>
-					<WordPressBlocksProvider
-						config={{
-							blocks,
-							theme: fromThemeJson(themeJson),
-						}}
-					>
-						<SiteWrapperProvider {...pageProps}>
-							<style jsx global>{`
-								html {
-									font-family: ${poppins.style.fontFamily};
-								}
-							`}</style>
-							<NextNProgress color="#818cf8" />
-							<Component {...pageProps} key={router.asPath} />
-							<Toaster
-								position="bottom-left"
-								toastOptions={{
-									style: {
-										fontSize: '14px',
-										borderRadius: '0.75rem',
-									},
-								}}
-								containerClassName="text-sm"
-							/>
-						</SiteWrapperProvider>
-					</WordPressBlocksProvider>
-				</FaustProvider>
-			</StatsigProvider>
+			{statsigKey ? (
+				<StatsigProvider sdkKey={statsigKey} user={user} options={{ logLevel: LogLevel.Warn }}>
+					{app}
+				</StatsigProvider>
+			) : (
+				app
+			)}
 		</>
 	)
 }
