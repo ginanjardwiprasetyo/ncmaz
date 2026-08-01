@@ -14,6 +14,7 @@ import NextNProgress from 'nextjs-progressbar'
 import themeJson from '@/../theme.json'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from '@vercel/analytics/next'
 import { LogLevel, StatsigProvider } from '@statsig/react-bindings'
 
 const poppins = Poppins({
@@ -34,6 +35,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 			<GoogleAnalytics trackPageViews />
 
 			<SpeedInsights/>
+			<Analytics />
 
 			<StatsigProvider
 				sdkKey={process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY!}
