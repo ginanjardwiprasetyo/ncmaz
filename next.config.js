@@ -23,7 +23,6 @@ module.exports = withFaust({
 	},
 	images: {
 		formats: ['image/avif', 'image/webp'],
-		quality: 75,
 		remotePatterns: [
 			{
 				protocol: 'http',
