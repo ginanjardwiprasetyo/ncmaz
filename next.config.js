@@ -7,6 +7,7 @@ const WP_HOSTNAME = (process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\
  * @type {import('next').NextConfig}
  **/
 module.exports = withFaust({
+	compress: true,
 	trailingSlash: true,
 	reactStrictMode: true,
 	experimental: {
