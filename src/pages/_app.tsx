@@ -13,13 +13,18 @@ import { Toaster } from 'react-hot-toast'
 import NextNProgress from 'nextjs-progressbar'
 import themeJson from '@/../theme.json'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { LogLevel, StatsigProvider } from '@statsig/react-bindings'
+import dynamic from 'next/dynamic'
+
+const DynamicSpeedInsights = dynamic(
+	() => import('@vercel/speed-insights/next').then(mod => ({ default: mod.SpeedInsights })),
+	{ ssr: false }
+)
 
 const poppins = Poppins({
 	subsets: ['latin'],
 	display: 'swap',
-	weight: ['300', '400', '500', '600', '700'],
+	weight: ['400', '600'],
 })
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -65,7 +70,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 		<>
 			<GoogleAnalytics trackPageViews />
 
-			<SpeedInsights/>
+			<DynamicSpeedInsights/>
 
 			{statsigKey ? (
 				<StatsigProvider sdkKey={statsigKey} user={user} options={{ logLevel: LogLevel.Warn }}>

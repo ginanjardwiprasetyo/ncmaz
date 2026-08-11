@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 
 export default function useSnapSlider({
 	sliderRef,
@@ -16,7 +16,7 @@ export default function useSnapSlider({
 		const slider = sliderRef.current
 		if (!slider) return
 
-		const handleScroll = _.debounce(() => {
+		const handleScroll = debounce(() => {
 			const slider = sliderRef.current
 			if (!slider) return
 

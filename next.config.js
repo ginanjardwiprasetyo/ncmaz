@@ -12,7 +12,18 @@ module.exports = withFaust({
 	experimental: {
 		typedRoutes: false,
 	},
+	async redirects() {
+		return [
+			{
+				source: '/index/',
+				destination: '/',
+				permanent: true,
+			},
+		]
+	},
 	images: {
+		formats: ['image/avif', 'image/webp'],
+		quality: 75,
 		remotePatterns: [
 			{
 				protocol: 'http',

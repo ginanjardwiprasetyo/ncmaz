@@ -24,6 +24,7 @@ import Error from '@/components/Error'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import { REVALIDATE_TIME } from '@/contains/contants'
+import SEO from '@/components/SEO/SEO'
 
 const PageContact = () => {
 	const T = getTrans()
@@ -208,11 +209,21 @@ const Page: FaustPage<GetReadingListPageQuery> = (props) => {
 				props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 			}
 		>
+			<SEO
+				title="Contact Us | Rekayasa Sipil"
+				description="Get in touch with the Rekayasa Sipil team. Reach out for civil engineering consultations, collaborations, or general inquiries. We typically respond within 24 hours on business days."
+			/>
 			<div className="container pb-20 pt-10 sm:py-20">
 				<main className="mx-auto max-w-5xl">
 					<Heading hTag="h1" desc={NC_SITE_SETTINGS.contact_page?.sub_title}>
 						{NC_SITE_SETTINGS.contact_page?.title}
 					</Heading>
+					<p className="mt-6 text-neutral-600 dark:text-neutral-400">
+						Have a question, collaboration idea, or need professional consultation
+						in civil engineering? Our team is ready to help. Reach out through the
+						form below or use our direct contact information. We typically respond
+						within 24 hours on business days.
+					</p>
 					<div className="my-10 border-t border-neutral-100 dark:border-neutral-700"></div>
 
 					<PageContact />

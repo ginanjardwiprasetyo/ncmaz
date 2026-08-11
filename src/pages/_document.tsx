@@ -24,6 +24,7 @@ export default class Document extends NextDocument {
 				dir={process.env.NEXT_PUBLIC_SITE_DIRECTION}
 			>
 				<Head>
+					<title>{SITE_TITLE}</title>
 					<link
 						href={`${SITE_URL}/api/feeds/feed.json`}
 						rel="alternate"

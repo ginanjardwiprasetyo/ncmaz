@@ -1,6 +1,7 @@
 import { GetStaticPropsContext } from 'next'
 import { FaustPage, getNextStaticProps } from '@faustwp/core'
 import CreateNewPostEditor from '@/components/PostSubmissionEditor/CreateNewPostEditor'
+import SEO from '@/components/SEO/SEO'
 import { useRouter } from 'next/router'
 import CircleLoading from '@/components/Loading/CircleLoading'
 import SwitchDarkMode from '@/components/SwitchDarkMode/SwitchDarkMode'
@@ -67,6 +68,7 @@ const Page: FaustPage<{}> = (props) => {
 
 	return (
 		<>
+			<SEO title="Submission | Rekayasa Sipil" />
 			<div className="relative flex h-[100vh] w-full flex-col">
 				{renderHeader()}
 				<CreateNewPostEditor isSubmittingPage />

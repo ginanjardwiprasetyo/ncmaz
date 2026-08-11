@@ -24,7 +24,7 @@ import { NC_SITE_SETTINGS } from '@/contains/site-settings'
 import Empty from '../Empty'
 import { gql } from '@/__generated__'
 import { getApolloClient } from '@faustwp/core'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import { TPostCard } from '../Card2/Card2'
 import Loading from '../Button/Loading'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
@@ -203,7 +203,7 @@ const SearchModal: FC<Props> = ({ renderTrigger, triggerClassName = '' }) => {
 												autoFocus
 												className="h-12 w-full border-0 bg-transparent pe-4 ps-11 text-sm text-gray-900 placeholder:text-gray-400 focus:ring-0 dark:text-gray-100 dark:placeholder:text-gray-300"
 												placeholder={T['Type to search...']}
-												onChange={_.debounce(handleSetSearchValue, 200)}
+												onChange={debounce(handleSetSearchValue, 200)}
 												onBlur={() => setQuery('')}
 											/>
 										</div>

@@ -6,13 +6,15 @@ import {
 	updateAuthorizedUser,
 } from '@/stores/viewer/viewerSlice'
 import { updateGeneralSettings } from '@/stores/general-settings/generalSettingsSlice'
-import ControlSettingsDemo from './ControlSettingsDemo'
-import CookiestBoxPopover from '@/components/CookiestBoxPopover'
-import MusicPlayer from '@/components/MusicPlayer/MusicPlayer'
+import dynamic from 'next/dynamic'
 import { initLocalPostsSavedListFromLocalstored } from '@/stores/localPostSavedList/localPostsSavedListSlice'
 import { usePathname } from 'next/navigation'
 import { CMSUserMetaResponseData } from '@/pages/api/cms-user-meta/[id]'
 import { addViewerReactionPosts } from '@/stores/viewer/viewerSlice'
+
+const DynamicCookiestBoxPopover = dynamic(() => import('@/components/CookiestBoxPopover'), { ssr: false })
+const DynamicControlSettingsDemo = dynamic(() => import('./ControlSettingsDemo'), { ssr: false })
+const DynamicMusicPlayer = dynamic(() => import('@/components/MusicPlayer/MusicPlayer'), { ssr: false })
 
 export function SiteWrapperChild({
 	...props
@@ -118,9 +120,9 @@ export function SiteWrapperChild({
 
 	return (
 		<div>
-			<CookiestBoxPopover />
-			<ControlSettingsDemo />
-			<MusicPlayer />
+			<DynamicCookiestBoxPopover />
+			<DynamicControlSettingsDemo />
+			<DynamicMusicPlayer />
 		</div>
 	)
 }

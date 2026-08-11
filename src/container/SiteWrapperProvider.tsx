@@ -2,7 +2,9 @@ import React, { FC } from 'react'
 import { Provider } from 'react-redux'
 import { store } from '@/stores/store'
 import { SiteWrapperChild } from './SiteWrapperChild'
-import LoginModal from './LoginModal'
+import dynamic from 'next/dynamic'
+
+const DynamicLoginModal = dynamic(() => import('./LoginModal'), { ssr: false })
 
 interface SiteWrapperProviderProps {
 	children: React.ReactNode
@@ -17,7 +19,7 @@ const SiteWrapperProvider: FC<SiteWrapperProviderProps> = ({
 		<Provider store={store}>
 			{children}
 			<SiteWrapperChild {...props} />
-			<LoginModal />
+			<DynamicLoginModal />
 		</Provider>
 	)
 }

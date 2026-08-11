@@ -19,6 +19,8 @@ interface Props {
   pageDescription?: string | null | undefined;
 }
 
+const MAX_TITLE_LENGTH = 60;
+
 const PageLayout: FC<Props> = ({
   children,
   footerMenuItems,
@@ -28,10 +30,15 @@ const PageLayout: FC<Props> = ({
   generalSettings,
   pageDescription,
 }) => {
+  const fullTitle = (pageTitle || "") + " - " + (generalSettings?.title || "");
+  const displayTitle = fullTitle.length > MAX_TITLE_LENGTH
+    ? fullTitle.substring(0, MAX_TITLE_LENGTH - 3) + "..."
+    : fullTitle;
+
   return (
     <>
       <SEO
-        title={(pageTitle || "") + " - " + (generalSettings?.title || "")}
+        title={displayTitle}
         description={pageDescription || generalSettings?.description || ""}
         imageUrl={pageFeaturedImageUrl}
       />

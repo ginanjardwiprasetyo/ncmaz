@@ -9,7 +9,7 @@ import {
 	useEffect,
 	useMemo,
 } from 'react'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import ReactPlayer, { ReactPlayerProps } from 'react-player'
 import { useMusicPlayer } from '@/hooks/useMusicPlayer'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
@@ -133,8 +133,8 @@ const MusicPlayer: FC<MusicPlayerProps> = ({}) => {
 				handleSeekChange={handleSeekChange}
 				handleVolumeChange={handleVolumeChange}
 				handleSetPlaybackRate={handleSetPlaybackRate}
-				handleClickBackwards10Sec={_.debounce(onClickBackwards10Sec, 200)}
-				handleClickForwards15Sec={_.debounce(onClickForwarkds15Sec, 200)}
+				handleClickBackwards10Sec={debounce(onClickBackwards10Sec, 200)}
+				handleClickForwards15Sec={debounce(onClickForwarkds15Sec, 200)}
 			/>
 
 			{/* ---- PLAYER ---- */}

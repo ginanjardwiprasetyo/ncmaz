@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counter/counterSlice";
 import viewerSlice from "./viewer/viewerSlice";
 import logger from "redux-logger";
 import generalSettingsSlice from "./general-settings/generalSettingsSlice";
@@ -7,7 +6,6 @@ import localPostsSavedListSlice from "./localPostSavedList/localPostsSavedListSl
 import postsNcmazMetaDataOkSlice from "./postsNcmazMetaDataOk/postsNcmazMetaDataOkSlice";
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   viewer: viewerSlice,
   generalSettings: generalSettingsSlice,
   localPostsSavedList: localPostsSavedListSlice,
