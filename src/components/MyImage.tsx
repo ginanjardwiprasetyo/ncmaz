@@ -11,11 +11,10 @@ const MyImage: FC<Props> = ({
 	defaultPlaceholderDataUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8+vx1PQAIqAM4jZDFJQAAAABJRU5ErkJggg==',
 	...props
 }) => {
-	const isExternal = typeof props.src === 'string' && props.src.startsWith('http')
 	return (
 		<Image
 			{...props}
-			unoptimized={isExternal || props.unoptimized}
+			sizes={props.sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
 			className={`${props.className} ${
 				props.src ? '' : 'dark:brightness-75 dark:filter'
 			}`}

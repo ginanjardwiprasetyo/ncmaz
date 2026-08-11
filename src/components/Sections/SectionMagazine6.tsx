@@ -38,6 +38,7 @@ const SectionMagazine6: FC<SectionMagazine6Props> = ({
 				{/* Image */}
 				<div className="aspect-h-9 aspect-w-9 overflow-hidden rounded-3xl md:aspect-h-5 lg:rounded-[40px]">
 					<MyImage
+						priority
 						fill
 						alt={title || ''}
 						sizes="(max-width: 1024px) 100vw, 1280px"

@@ -23,6 +23,8 @@ module.exports = withFaust({
 		]
 	},
 	images: {
+		loader: 'custom',
+		loaderFile: './src/components/MyImage.loader.ts',
 		formats: ['image/avif', 'image/webp'],
 		remotePatterns: [
 			{
