@@ -38,7 +38,7 @@ const Card8: FC<Card8Props> = ({ className = 'h-full', post }) => {
 					src={featuredImage?.sourceUrl || ''}
 					alt={title || ''}
 					fill
-					sizes="(max-width: 600px) 480px, 800px"
+					sizes="(max-width: 600px) 100vw, 800px"
 				/>
 				<PostTypeFeaturedIcon
 					className="absolute left-4 top-4"

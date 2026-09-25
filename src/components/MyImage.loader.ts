@@ -1,5 +1,5 @@
 export default function wpImageLoader({ src, width, quality }: { src: string; width: number; quality?: number }) {
-	const q = quality || 70
+	const q = quality || 60
 
 	// Local (public/) files: /_next/image is broken here (trailingSlash:true
 	// redirects it to a path the optimizer rejects), so proxy via wsrv.nl

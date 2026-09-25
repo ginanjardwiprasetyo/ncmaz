@@ -30,7 +30,7 @@ const CardAuthorBox2: FC<CardAuthorBox2Props> = ({
 						containerClassName="flex aspect-w-7 aspect-h-5 w-full h-0"
 						src={bgImageMeta?.sourceUrl || ''}
 						fill
-						sizes="(max-width: 600px) 480px, 33vw"
+						sizes="(max-width: 600px) 100vw, 33vw"
 					/>
 				</div>
 				<div className="absolute inset-x-3 top-3 flex">

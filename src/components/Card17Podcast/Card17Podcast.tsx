@@ -49,7 +49,7 @@ const Card17Podcast: FC<Card17PodcastProps> = ({ className = '', post }) => {
 			<Link href={uri || ''} className="flex items-center space-x-4">
 				<div className="relative block h-11 w-11 flex-shrink-0 overflow-hidden rounded-full shadow-lg sm:h-16 sm:w-16">
 					<MyImage
-						sizes="(max-width: 600px) 480px, 800px"
+						sizes="(max-width: 640px) 44px, 64px"
 						className="object-cover"
 						src={featuredImage?.sourceUrl || ''}
 						fill

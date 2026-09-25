@@ -60,7 +60,7 @@ const Card16Podcast: FC<Card16PodcastProps> = ({
 				<MyImage
 					fill
 					alt=""
-					sizes="(max-width: 600px) 480px, 800px"
+					sizes="(max-width: 600px) 100vw, 800px"
 					src={featuredImage?.sourceUrl || ''}
 					className="object-cover"
 				/>

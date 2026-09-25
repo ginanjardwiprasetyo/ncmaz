@@ -34,7 +34,7 @@ const Card4: FC<Card4Props> = ({ className = 'h-full', post }) => {
 					fill
 					className="object-cover"
 					alt={title || ''}
-					sizes="(max-width: 600px) 480px, 800px"
+					sizes="(max-width: 600px) 100vw, 800px"
 					src={featuredImage?.sourceUrl || ''}
 				/>
 			</span>

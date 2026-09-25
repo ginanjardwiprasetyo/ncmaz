@@ -57,7 +57,7 @@ const Card7: FC<Card7Props> = ({
 				<MyImage
 					fill
 					alt={title || ''}
-					sizes="(max-width: 600px) 480px,800px"
+					sizes="(max-width: 600px) 100vw,800px"
 					className="h-full w-full rounded-3xl object-cover"
 					src={featuredImage?.sourceUrl || ''}
 				/>

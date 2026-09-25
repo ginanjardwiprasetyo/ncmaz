@@ -77,7 +77,7 @@ const Card19: FC<Card19Props> = ({
 			) : (
 				<Link href={uri}>
 					<MyImage
-						sizes="(max-width: 600px) 480px, 800px"
+						sizes="(max-width: 600px) 100vw, 800px"
 						className="h-full w-full rounded-xl object-cover"
 						src={featuredImage?.sourceUrl || ''}
 						alt="post"

@@ -10,7 +10,7 @@ const NcImage: FC<NcImageProps> = ({
 	containerClassName = '',
 	alt = 'nc-imgs',
 	className = 'object-cover w-full h-full',
-	sizes = '(max-width: 600px) 480px, 800px',
+	sizes = '(max-width: 600px) 100vw, 800px',
 	...args
 }) => {
 	return (

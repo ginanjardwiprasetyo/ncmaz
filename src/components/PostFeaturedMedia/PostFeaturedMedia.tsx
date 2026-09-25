@@ -1,8 +1,10 @@
 'use client'
 
 import { FC } from 'react'
-import GallerySlider from './GallerySlider'
-import MediaVideo from './MediaVideo'
+import dynamic from 'next/dynamic'
+// framer-motion / react-player live here — split out of the shared _app chunk
+const GallerySlider = dynamic(() => import('./GallerySlider'))
+const MediaVideo = dynamic(() => import('./MediaVideo'))
 import PostTypeFeaturedIcon from '@/components/PostTypeFeaturedIcon/PostTypeFeaturedIcon'
 import MediaAudio from './MediaAudio'
 import Link from 'next/link'
@@ -95,7 +97,7 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
 					fill
 					className="object-cover"
 					src={featuredImage?.sourceUrl || ''}
-					sizes="(max-width: 600px) 480px, 800px"
+					sizes="(max-width: 600px) 100vw, 800px"
 				/>
 			)}
 			{renderContent()}

@@ -61,6 +61,7 @@ const Card13: FC<Card13Props> = ({ className = '', post }) => {
 					className="h-full w-full rounded-xl object-cover sm:rounded-3xl"
 					src={featuredImage?.sourceUrl || ''}
 					fill
+					sizes="(max-width: 639px) 96px, (max-width: 1023px) 144px, 200px"
 					alt={title || 'Card Image'}
 				/>
 				<PostTypeFeaturedIcon
