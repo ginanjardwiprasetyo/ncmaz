@@ -13,7 +13,6 @@ import { Toaster } from 'react-hot-toast'
 import NextNProgress from 'nextjs-progressbar'
 import themeJson from '@/../theme.json'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
-import { LogLevel, StatsigProvider } from '@statsig/react-bindings'
 import dynamic from 'next/dynamic'
 
 const DynamicSpeedInsights = dynamic(
@@ -29,11 +28,6 @@ const poppins = Poppins({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter()
-	const statsigKey = process.env.NEXT_PUBLIC_STATSIG_CLIENT_KEY
-
-	const user = {
-		userID: 'a-user',
-	}
 
 	const app = (
 		<FaustProvider pageProps={pageProps}>
@@ -68,17 +62,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<>
-			<GoogleAnalytics trackPageViews />
+			<GoogleAnalytics trackPageViews strategy="lazyOnload" />
 
 			<DynamicSpeedInsights/>
 
-			{statsigKey ? (
-				<StatsigProvider sdkKey={statsigKey} user={user} options={{ logLevel: LogLevel.Warn }}>
-					{app}
-				</StatsigProvider>
-			) : (
-				app
-			)}
+			{app}
 		</>
 	)
 }
