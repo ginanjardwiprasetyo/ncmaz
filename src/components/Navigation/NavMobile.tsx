@@ -147,12 +147,14 @@ const NavMobile: React.FC<NavMobileProps> = ({
 						type="search"
 						name="mbsearch"
 						id="mbsearch"
+						aria-label="Search"
 						placeholder="Type and press enter"
 						className="w-full flex-1 border-none bg-transparent py-3.5 pe-10 text-sm focus:outline-none focus:ring-0"
 					/>
 
 					<button
 						type="submit"
+						aria-label="Search"
 						className="absolute inset-y-0 end-0 py-2 pe-4 ps-2"
 					>
 						<SearchIcon className="h-5 w-5" />

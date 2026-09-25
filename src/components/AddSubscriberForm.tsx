@@ -67,6 +67,7 @@ const AddSubscriberForm: FC<Props> = ({ className = '' }) => {
 				/>
 				<ButtonCircle
 					type="submit"
+					aria-label="Subscribe"
 					className="absolute end-1 top-1/2 -translate-y-1/2 transform dark:bg-neutral-100/10 dark:text-white dark:hover:bg-neutral-100/15"
 					disabled={loading}
 				>

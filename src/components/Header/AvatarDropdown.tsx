@@ -288,6 +288,7 @@ export default function AvatarDropdown({ className = '' }: Props) {
 					<>
 						<PopoverButton
 							as="button"
+							aria-label="Account menu"
 							className={`flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 hover:bg-neutral-100 focus:outline-none sm:h-12 sm:w-12 dark:text-neutral-300 dark:hover:bg-neutral-800`}
 						>
 							{!viewer?.name ? (
