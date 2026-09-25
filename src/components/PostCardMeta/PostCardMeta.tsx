@@ -59,11 +59,11 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
 			)}
 			<>
 				{author?.databaseId && (
-					<span className="mx-[6px] font-medium text-neutral-500 dark:text-neutral-400">
+					<span className="mx-[6px] font-medium text-neutral-600 dark:text-neutral-400">
 						·
 					</span>
 				)}
-				<span className="font-normal text-neutral-500 dark:text-neutral-400">
+				<span className="font-normal text-neutral-600 dark:text-neutral-400">
 					{ncFormatDate(date || '')}
 				</span>
 			</>
