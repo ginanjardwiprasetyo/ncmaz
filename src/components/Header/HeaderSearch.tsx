@@ -9,7 +9,7 @@ export const HeaderSearchForm = () => {
 	const renderTrigger = () => {
 		return (
 			<div className="group relative cursor-pointer">
-				<button className="absolute inset-0"></button>
+				<button className="absolute inset-0" aria-label="Search"></button>
 				<Input
 					type="text"
 					placeholder={T['Type to search...']}
@@ -70,7 +70,11 @@ export const SearchIconBtn = ({
 	const renderTrigger = () => {
 		return (
 			<div className={`relative block self-center ${className}`}>
-				<button className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 hover:bg-neutral-100 focus:outline-none sm:h-12 sm:w-12 dark:text-neutral-300 dark:hover:bg-neutral-800">
+				<button
+					type="button"
+					aria-label="Search"
+					className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 hover:bg-neutral-100 focus:outline-none sm:h-12 sm:w-12 dark:text-neutral-300 dark:hover:bg-neutral-800"
+				>
 					<SearchIcon className="h-5 w-5" />
 				</button>
 			</div>

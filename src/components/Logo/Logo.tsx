@@ -8,7 +8,7 @@ export interface LogoProps {
 	imageClassName?: string
 }
 
-const Logo: React.FC<LogoProps> = ({ className = '', imageClassName }) => {
+const Logo: React.FC<LogoProps> = ({ className = '', imageClassName = '' }) => {
 	let logoSrc = NC_SITE_SETTINGS.site_info?.site_logo || ''
 	let logoLightSrc =
 		NC_SITE_SETTINGS.site_info?.site_logo_light || logoSrc || ''
@@ -26,15 +26,15 @@ const Logo: React.FC<LogoProps> = ({ className = '', imageClassName }) => {
 				className={'block w-12 sm:w-14 dark:hidden ' + imageClassName}
 				src={logoSrc || ''}
 				alt={'Logo'}
-				width={56}
-				height={56}
+				width={187}
+				height={164}
 			/>
 			<MyImage
 				className={'hidden w-12 sm:w-14 dark:block ' + imageClassName}
 				src={logoLightSrc || ''}
 				alt={'Logo'}
-				width={56}
-				height={56}
+				width={187}
+				height={164}
 			/>
 		</Link>
 	)

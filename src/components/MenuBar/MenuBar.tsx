@@ -67,12 +67,14 @@ const MenuBar: React.FC<MenuBarProps> = ({ menuItems }) => {
 
 	return (
 		<div>
-			<button
-				onClick={() => {
-					setIsVisable(!isVisable)
-				}}
-				className="flex items-center justify-center rounded-lg p-2.5 text-neutral-700 focus:outline-none dark:text-neutral-300"
-			>
+		<button
+			type="button"
+			aria-label="Open menu"
+			onClick={() => {
+				setIsVisable(!isVisable)
+			}}
+			className="flex items-center justify-center rounded-lg p-2.5 text-neutral-700 focus:outline-none dark:text-neutral-300"
+		>
 				<Bars3Icon className="h-7 w-7 lg:h-8 lg:w-8" />
 			</button>
 

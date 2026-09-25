@@ -339,8 +339,11 @@ const NavigationItem2: FC<Props> = ({ menuItem: menuItemProp }) => {
 		)
 	}
 
+	// <ul> (nc-Navigation) must only contain <li> as direct children;
+	// dropdown paths already render li/Popover as="li", mega menu renders a div
 	if (menuItem.ncmazfaustMenu?.isMegaMenu) {
-		return renderMegaMenu(menuItem)
+		const mega = renderMegaMenu(menuItem)
+		return mega ? <li>{mega}</li> : null
 	}
 	return renderDropdownMenu(menuItem)
 }
