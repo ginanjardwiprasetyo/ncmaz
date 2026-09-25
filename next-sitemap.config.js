@@ -29,9 +29,8 @@ module.exports = {
 		additionalSitemaps: [`${SITE_URL}/wordpress-sitemap.xml`],
 	},
 	transform: async (config, path) => {
-		// Get the current date and time in the format m/d/Y g:i a
-		const currentDate = new Date()
-		const formattedDate = `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()} ${currentDate.getHours() % 12 || 12}:${currentDate.getMinutes().toString().padStart(2, '0')} ${currentDate.getHours() >= 12 ? 'PM' : 'AM'}`
+		// Get the current date in W3C datetime format (sitemap protocol)
+		const formattedDate = new Date().toISOString()
 
 		// Define paths to assign low priority
 		const lowPriorityPaths = ['/contact', '/login', '/sign-up'] // Check paths without the trailing slashes
@@ -56,7 +55,7 @@ module.exports = {
 
 		return {
 			loc: `${SITE_URL}${path}`, // Ensure loc URL is correct
-			lastmod: formattedDate, // Formatted date as m/d/Y g:i a
+			lastmod: formattedDate, // W3C datetime
 			priority: priority, // Set priority
 			changefreq: changefreq, // Set change frequency
 		}

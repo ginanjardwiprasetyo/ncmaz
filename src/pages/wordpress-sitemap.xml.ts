@@ -41,17 +41,9 @@ async function getAllWPContent(after = null, acc: any[] = []) {
 	return acc
 }
 
-// Function to format the date to `m/d/Y g:i a`
+// Function to format the date to W3C datetime (sitemap protocol)
 function formatDate(dateString: string): string {
-	const date = new Date(dateString)
-	const month = date.getMonth() + 1
-	const day = date.getDate()
-	const year = date.getFullYear()
-	const hours = date.getHours()
-	const minutes = date.getMinutes().toString().padStart(2, '0')
-	const period = hours >= 12 ? 'PM' : 'AM'
-
-	return `${month}/${day}/${year} ${hours % 12 || 12}:${minutes} ${period}`
+	return new Date(dateString).toISOString()
 }
 
 // Sitemap component

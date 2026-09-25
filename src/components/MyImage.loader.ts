@@ -11,7 +11,8 @@ export default function wpImageLoader({ src, width, quality }: { src: string; wi
 	}
 
 	// For direct WordPress images, use Jetpack Photon proxy
-	if (src.includes('live-rekayasa.pantheonsite.io')) {
+	const wpHost = process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\//, '').replace(/\/$/, '')
+	if (wpHost && src.includes(wpHost)) {
 		return `https://i0.wp.com/${src.replace('https://', '').replace('http://', '')}?w=${width}&q=${q}&ssl=1`
 	}
 
