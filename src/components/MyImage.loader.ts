@@ -13,6 +13,12 @@ export default function wpImageLoader({ src, width, quality }: { src: string; wi
 	// For direct WordPress images, use Jetpack Photon proxy
 	const wpHost = process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\//, '').replace(/\/$/, '')
 	if (wpHost && src.includes(wpHost)) {
+		// ponytail: Photon refuses to compress PNG -> wsrv.nl converts it to webp
+		if (/\.png($|\?)/i.test(src)) {
+			return `https://wsrv.nl/?url=${encodeURIComponent(
+				src.replace(/^https?:\/\//, '')
+			)}&w=${width}&q=${q}&output=webp`
+		}
 		return `https://i0.wp.com/${src.replace('https://', '').replace('http://', '')}?w=${width}&q=${q}&ssl=1`
 	}
 

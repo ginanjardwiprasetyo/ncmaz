@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import viewerSlice from "./viewer/viewerSlice";
-import logger from "redux-logger";
 import generalSettingsSlice from "./general-settings/generalSettingsSlice";
 import localPostsSavedListSlice from "./localPostSavedList/localPostsSavedListSlice";
 import postsNcmazMetaDataOkSlice from "./postsNcmazMetaDataOk/postsNcmazMetaDataOkSlice";
@@ -14,12 +13,6 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  //
-  middleware:
-    process.env.NODE_ENV !== "production"
-      ? // @ts-ignore
-        (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
-      : undefined,
   devTools: process.env.NODE_ENV !== "production",
 });
 
