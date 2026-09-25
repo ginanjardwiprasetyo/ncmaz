@@ -18,12 +18,12 @@
 		"features_list": ["Create a free account.", "Write your stories."]
 	},
 	"top_banner": {
-		"enable": true,
-		"description": "Laman masih dalam pengembangan, mohon maklum.",
+		"enable": false,
+		"description": "",
 		"end_link": {
-			"url": "https://instagram.com/rekayasa.sipil",
-			"text": "Liat Instagram Kami →",
-			"new_tab": true
+			"url": "",
+			"text": "",
+			"new_tab": false
 		}
 	},
 	"top_category_section": {
