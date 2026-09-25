@@ -14,6 +14,7 @@ const MyImage: FC<Props> = ({
 	return (
 		<Image
 			{...props}
+			quality={props.quality || 70}
 			sizes={props.sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
 			className={`${props.className} ${
 				props.src ? '' : 'dark:brightness-75 dark:filter'

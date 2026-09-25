@@ -1,5 +1,15 @@
 export default function wpImageLoader({ src, width, quality }: { src: string; width: number; quality?: number }) {
-	const q = quality || 75
+	const q = quality || 70
+
+	// Local (public/) files: /_next/image is broken here (trailingSlash:true
+	// redirects it to a path the optimizer rejects), so proxy via wsrv.nl
+	// like the PNG branch below. wsrv does not upscale past the source.
+	if (src.startsWith('/')) {
+		const origin = (process.env.NEXT_PUBLIC_URL || '')
+			.replace(/^https?:\/\//, '')
+			.replace(/\/$/, '')
+		return `https://wsrv.nl/?url=${encodeURIComponent(origin + src)}&w=${width}&q=${q}&output=webp&we=1`
+	}
 
 	// For WordPress Jetpack/Photon proxied images
 	if (src.includes('i0.wp.com') || src.includes('i1.wp.com') || src.includes('i2.wp.com')) {
@@ -17,7 +27,7 @@ export default function wpImageLoader({ src, width, quality }: { src: string; wi
 		if (/\.png($|\?)/i.test(src)) {
 			return `https://wsrv.nl/?url=${encodeURIComponent(
 				src.replace(/^https?:\/\//, '')
-			)}&w=${width}&q=${q}&output=webp`
+			)}&w=${width}&q=${q}&output=webp&we=1`
 		}
 		return `https://i0.wp.com/${src.replace('https://', '').replace('http://', '')}?w=${width}&q=${q}&ssl=1`
 	}
