@@ -7,8 +7,9 @@ async function callOnce(
 	number: 'ADD_1' | 'REMOVE_1',
 	userId: number,
 ): Promise<Result | null> {
-	// same-origin via rewrite /wp-graphql/ (lihat next.config.js) — tanpa CORS
-	const res = await fetch('/wp-graphql/', {
+	// same-origin via API route (src/pages/api/wp-graphql.ts) — tanpa CORS,
+	// cookie browser tidak diteruskan ke Pantheon
+	const res = await fetch('/api/wp-graphql/', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
