@@ -10,6 +10,9 @@ module.exports = withFaust({
 	compress: true,
 	trailingSlash: true,
 	reactStrictMode: true,
+	// Lighthouse "large first-party JS without source maps" — maps are only
+	// fetched when devtools opens, zero runtime cost
+	productionBrowserSourceMaps: true,
 	experimental: {
 		typedRoutes: false,
 	},
