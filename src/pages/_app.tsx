@@ -17,7 +17,8 @@ import dynamic from 'next/dynamic'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-// GA4 runs inside a Partytown web worker so gtag.js stays off the main thread (TBT)
+// Plain async gtag. Measured (4x CPU, prod): partytown added ~1-1.5s main-thread
+// (sandbox proxy) vs ~0 for plain async gtag — see prof4 A/B.
 function Analytics() {
 	const router = useRouter()
 
@@ -37,27 +38,13 @@ function Analytics() {
 		<>
 			<script
 				dangerouslySetInnerHTML={{
-					__html: `window.partytown={forward:['dataLayer.push','gtag']}`,
+					__html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`,
 				}}
-			/>
-			<Script
-				id="partytown"
-				src="/~partytown/partytown.js"
-				strategy="afterInteractive"
 			/>
 			<Script
 				id="ga4-src"
-				type="text/partytown"
 				strategy="afterInteractive"
 				src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-			/>
-			<Script
-				id="ga4-init"
-				type="text/partytown"
-				strategy="afterInteractive"
-				dangerouslySetInnerHTML={{
-					__html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`,
-				}}
 			/>
 		</>
 	)
