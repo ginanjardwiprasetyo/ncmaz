@@ -49,7 +49,7 @@ export default function Page404Content() {
 					</p>
 					<div className="hidden sm:block sm:h-7 sm:w-px sm:flex-none sm:bg-gray-200 dark:bg-neutral-600" />
 					<div className="flex gap-x-4">
-						{NC_SITE_SETTINGS.site_socials?.map(item => (
+						{NC_SITE_SETTINGS.site_socials?.map((item) => (
 							<a
 								key={item?.name}
 								href={item?.url}
@@ -60,9 +60,9 @@ export default function Page404Content() {
 								<span className="absolute -inset-0.5 hidden rounded-lg bg-neutral-300 dark:block"></span>
 								<span className="sr-only">{item?.name}</span>
 								<MyImage
-									width={22}
-									height={22}
-									className="max-h-[22px] opacity-60 hover:opacity-100"
+									width={21}
+									height={24}
+									className="opacity-60 hover:opacity-100"
 									src={item?.icon || ''}
 									alt={item?.name || ''}
 								/>

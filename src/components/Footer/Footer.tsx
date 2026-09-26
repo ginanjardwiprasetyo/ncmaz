@@ -76,9 +76,9 @@ export default function Footer({ menuItems }: Props) {
 								<span className="absolute -inset-0.5 hidden rounded-lg bg-neutral-400 dark:block"></span>
 								<span className="sr-only">{item?.name}</span>
 								<MyImage
-									width={22}
-									height={22}
-									className="relative max-h-[22px] opacity-60 hover:opacity-100"
+									width={21}
+									height={24}
+									className="relative opacity-60 hover:opacity-100"
 									src={item?.icon || ''}
 									alt={item?.name || ''}
 								/>

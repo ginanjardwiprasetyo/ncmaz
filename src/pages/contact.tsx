@@ -84,9 +84,9 @@ const PageContact = () => {
 										<span className="absolute -inset-0.5 hidden rounded-lg bg-neutral-400 dark:block"></span>
 										<span className="sr-only">{item?.name}</span>
 										<MyImage
-											width={20}
-											height={20}
-											className="max-h-5 opacity-60 hover:opacity-100"
+											width={21}
+											height={24}
+											className="opacity-60 hover:opacity-100"
 											src={item?.icon || ''}
 											alt={item?.name || ''}
 										/>
@@ -221,10 +221,10 @@ const Page: FaustPage<GetReadingListPageQuery> = (props) => {
 						{NC_SITE_SETTINGS.contact_page?.title}
 					</Heading>
 					<p className="mt-6 text-neutral-600 dark:text-neutral-400">
-						Have a question, collaboration idea, or need professional consultation
-						in civil engineering? Our team is ready to help. Reach out through the
-						form below or use our direct contact information. We typically respond
-						within 24 hours on business days.
+						Have a question, collaboration idea, or need professional
+						consultation in civil engineering? Our team is ready to help. Reach
+						out through the form below or use our direct contact information. We
+						typically respond within 24 hours on business days.
 					</p>
 					<div className="my-10 border-t border-neutral-100 dark:border-neutral-700"></div>
 

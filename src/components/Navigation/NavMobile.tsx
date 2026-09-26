@@ -193,9 +193,9 @@ const NavMobile: React.FC<NavMobileProps> = ({
 							<span className="absolute -inset-1 hidden rounded-full bg-neutral-400 dark:block"></span>
 
 							<MyImage
-								width={22}
-								height={22}
-								className="max-h-[22px] opacity-60 hover:opacity-100"
+								width={21}
+								height={24}
+								className="opacity-60 hover:opacity-100"
 								src={item?.icon || ''}
 								alt={item?.name || ''}
 							/>

@@ -30,16 +30,8 @@ const WidgetSocialsFollow: FC<WidgetSocialsFollowProps> = ({
 							<MyImage
 								src={social?.icon || ''}
 								alt={social?.name || ''}
-								width={
-									social?.name === 'twitter' || social?.name === 'tiktok'
-										? 30
-										: 36
-								}
-								height={
-									social?.name === 'twitter' || social?.name === 'tiktok'
-										? 30
-										: 36
-								}
+								width={28}
+								height={32}
 							/>
 						</div>
 						<div className="flex flex-col gap-1">

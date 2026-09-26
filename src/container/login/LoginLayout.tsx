@@ -1,4 +1,5 @@
 import Logo from '@/components/Logo/Logo'
+import SEO from '@/components/SEO/SEO'
 import {
 	IS_CHISNGHIAX_DEMO_SITE,
 	NC_SITE_SETTINGS,
@@ -47,6 +48,10 @@ const LoginLayout: FC<Props> = ({
 
 	return (
 		<div className="not-dark container relative h-[100vh] min-h-[600px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 xl:min-h-[800px] dark:bg-zinc-950">
+			<SEO
+				title={`${title} - ${NC_SITE_SETTINGS.site_info?.site_title || 'Rekayasa Sipil'}`}
+				description={NC_SITE_SETTINGS.site_info?.site_description}
+			/>
 			<Link
 				className="focus-visible:ring-ring absolute right-4 top-4 hidden h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 md:right-8 md:top-8 lg:inline-flex dark:hover:bg-neutral-700"
 				href={rightBtn.href}
