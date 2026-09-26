@@ -59,7 +59,8 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	postDatabseId,
 }) => {
 	const [likeCountState, setLikeCountState] = useState(likeCountProp)
-	const [likedAnon, setLikedAnon] = useState(() => isLikedInLS(postDatabseId))
+	// ponytail: init false = same as SSR, read localStorage after mount to avoid hydration attr mismatch (title/fill stuck on server value)
+	const [likedAnon, setLikedAnon] = useState(false)
 	//
 	const [handleUpdateReactionCount, { loading, error, data, called }] =
 		useMutation(NC_MUTATION_UPDATE_USER_REACTION_POST_COUNT)
@@ -74,6 +75,11 @@ const PostCardLikeAction: FC<PostCardLikeActionProps> = ({
 	const dispatch = useDispatch()
 
 	const { isAuthenticated, isReady } = authorizedUser
+
+	// sync persisted anonymous like after hydration (client-only data)
+	useEffect(() => {
+		setLikedAnon(isLikedInLS(postDatabseId))
+	}, [postDatabseId])
 
 	//
 	useEffect(() => {
