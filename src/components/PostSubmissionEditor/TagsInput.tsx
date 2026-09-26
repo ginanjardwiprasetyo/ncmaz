@@ -94,8 +94,11 @@ const TagsInput: FC<TagsInputProps> = ({ onChange, defaultValue }) => {
 	}
 
 	const setNewTags = (tag: TagNodeShort) => {
-		if (!checkIncludes(tag)) {
-			setTags((prevTags) => [...prevTags, tag])
+		// ponytail: satu guard untuk semua pemanggil — nama kosong/hanya koma ditolak
+		const name = (tag.name || '').replace(/,/g, '').trim()
+		if (!name) return
+		if (!checkIncludes({ ...tag, name })) {
+			setTags((prevTags) => [...prevTags, { ...tag, name }])
 		}
 		setInputTextValue('')
 		inputRef.current?.focus()
@@ -166,23 +169,20 @@ const TagsInput: FC<TagsInputProps> = ({ onChange, defaultValue }) => {
 							ref={inputRef}
 							value={inputTextValue}
 							onChange={(e) => {
-								const regex = /^[a-zA-Z0-9]*$/ // Cho phép chỉ nhập các ký tự chữ và số
 								const value = e.target.value
-								const lastChar = value[value.length - 1]
 
-								if (
-									(lastChar === ' ' || lastChar === ',') &&
-									value.length > 1
-								) {
+								// koma = pemisah tag; spasi hanya separator kata biasa
+								if (value.endsWith(',')) {
 									setNewTags({
 										databaseId: Date.now(),
-										name: value.replace(/[, ]/g, ''),
+										name: value,
 										__typename: 'Tag',
 									})
+									setInputTextValue('')
 									return
 								}
 
-								if (regex.test(value)) {
+								if (/^[a-zA-Z0-9\s]*$/.test(value)) {
 									setInputTextValue(value)
 								}
 							}}
@@ -197,23 +197,23 @@ const TagsInput: FC<TagsInputProps> = ({ onChange, defaultValue }) => {
 							}
 							onFocus={openPopover}
 							onKeyUp={(e) => {
-								// check if the key is not Enter, Space, Comma
 								if (e.key !== 'Enter' && e.key !== 'Tab') {
 									return
 								}
 								setNewTags({
 									databaseId: Date.now(),
-									name: e.currentTarget.value.replace(/[, ]/g, ''),
+									name: e.currentTarget.value,
 									__typename: 'Tag',
 								})
+								setInputTextValue('')
 							}}
 						/>
 					</li>
 				)}
 			</ul>
 			<i className="my-1 text-[10px] sm:hidden">
-				(For add a tag, press the <code>"Enter"</code>, <code>"Space"</code> or{' '}
-				<code>","</code> key after typing.)
+				(For add a tag, press the <code>"Enter"</code> or <code>","</code> key
+				after typing.)
 			</i>
 
 			{isOpen && (
