@@ -11,25 +11,23 @@ export default function wpImageLoader({ src, width, quality }: { src: string; wi
 		return `https://wsrv.nl/?url=${encodeURIComponent(origin + src)}&w=${width}&q=${q}&output=webp&we=1`
 	}
 
+	// Photon/i0.wp.com: same helper, strips the photon prefix back to origin
+	const viaWsrv = (raw: string) =>
+		`https://wsrv.nl/?url=${encodeURIComponent(
+			raw.replace(/^https?:\/\//, ''),
+		)}&w=${width}&q=${q}&output=webp&we=1`
+
 	// For WordPress Jetpack/Photon proxied images
 	if (src.includes('i0.wp.com') || src.includes('i1.wp.com') || src.includes('i2.wp.com')) {
-		const url = new URL(src)
-		url.searchParams.set('w', String(width))
-		url.searchParams.set('q', String(q))
-		url.searchParams.set('ssl', '1')
-		return url.toString()
+		const u = new URL(src)
+		// ponytail: Photon ignores q on webp sources (byte-identical at q70..q40) — wsrv re-encodes
+		return viaWsrv(`https://${u.host}${u.pathname}`)
 	}
 
-	// For direct WordPress images, use Jetpack Photon proxy
+	// For direct WordPress images — wsrv re-encodes both PNG and jpg/webp (Photon skips webp q)
 	const wpHost = process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/^https?:\/\//, '').replace(/\/$/, '')
 	if (wpHost && src.includes(wpHost)) {
-		// ponytail: Photon refuses to compress PNG -> wsrv.nl converts it to webp
-		if (/\.png($|\?)/i.test(src)) {
-			return `https://wsrv.nl/?url=${encodeURIComponent(
-				src.replace(/^https?:\/\//, '')
-			)}&w=${width}&q=${q}&output=webp&we=1`
-		}
-		return `https://i0.wp.com/${src.replace('https://', '').replace('http://', '')}?w=${width}&q=${q}&ssl=1`
+		return viaWsrv(src)
 	}
 
 	// For other external images, return as-is (unoptimized)
