@@ -8,6 +8,7 @@ import {
   NC_PRIMARY_MENU_QUERY_FRAGMENT,
 } from "@/fragments/menu";
 import { NcgeneralSettingsFieldsFragmentFragment } from "@/__generated__/graphql";
+import { NC_SITE_SETTINGS } from "@/contains/site-settings";
 
 interface Props {
   children: React.ReactNode;
@@ -39,7 +40,12 @@ const PageLayout: FC<Props> = ({
     <>
       <SEO
         title={displayTitle}
-        description={pageDescription || generalSettings?.description || ""}
+        description={
+          pageDescription ||
+          generalSettings?.description ||
+          NC_SITE_SETTINGS.site_info?.site_description ||
+          ""
+        }
         imageUrl={pageFeaturedImageUrl}
       />
 
