@@ -43,7 +43,7 @@ function Analytics() {
 			/>
 			<Script
 				id="ga4-src"
-				strategy="afterInteractive"
+				strategy="lazyOnload"
 				src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
 			/>
 		</>

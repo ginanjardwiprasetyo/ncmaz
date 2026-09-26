@@ -8,8 +8,6 @@ import { TCategoryCardFull } from '@/components/CardCategory1/CardCategory1'
 import SocialsShareDropdown from '@/components/SocialsShareDropdown/SocialsShareDropdown'
 import PageLayout from '@/container/PageLayout'
 import ArchiveLayout from '@/container/archives/ArchiveLayout'
-import { GET_POSTS_FIRST_COMMON } from '@/contains/contants'
-import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import { PostDataFragmentType } from '@/data/types'
 import { getPostFormatDataFromFragment } from '@/utils/getPostFormatDataFromFragment'
 import { FaustTemplate } from '@faustwp/core'
@@ -119,52 +117,5 @@ const Archive: FaustTemplate<PageArchiveGetArchiveQuery> = (props) => {
 		</>
 	)
 }
-
-Archive.variables = ({ uri }) => ({
-	uri,
-	first: GET_POSTS_FIRST_COMMON,
-	headerLocation: PRIMARY_LOCATION,
-	footerLocation: FOOTER_LOCATION,
-})
-
-Archive.query = gql(`
- query PageArchiveGetArchive($uri: String! = "", $first: Int, $headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
-  nodeByUri(uri: $uri) {
-      uri
-      id
-      ... on PostFormat {
-        ...NcmazFcPostFormatFullFieldsFragment
-        posts(first: $first, where: {orderby: {field: DATE, order: DESC}}) {
-          nodes {
-            ...NcmazFcPostCardFields
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-        }
-      }
-    }
-    categories(first:10, where: { orderby: COUNT, order: DESC }) {
-      nodes {
-        ...NcmazFcCategoryFullFieldsFragment
-      }
-    }
-     # common query for all page 
-   generalSettings {
-      ...NcgeneralSettingsFieldsFragment
-    }
-    primaryMenuItems: menuItems(where: { location:  $headerLocation  }, first: 80) {
-      nodes {
-        ...NcPrimaryMenuFieldsFragment
-      }
-    }
-    footerMenuItems: menuItems(where: { location:  $footerLocation  }, first: 50) {
-      nodes {
-        ...NcFooterMenuFieldsFragment
-      }
-    }
-    # end common query for all page
-  }`)
 
 export default Archive

@@ -1,4 +1,3 @@
-import { gql } from '@/__generated__'
 import {
 	NcgeneralSettingsFieldsFragmentFragment,
 	PageCategoryGetCategoryQuery,
@@ -8,8 +7,6 @@ import MyImage from '@/components/MyImage'
 import SocialsShareDropdown from '@/components/SocialsShareDropdown/SocialsShareDropdown'
 import PageLayout from '@/container/PageLayout'
 import ArchiveLayout from '@/container/archives/ArchiveLayout'
-import { GET_POSTS_FIRST_COMMON } from '@/contains/contants'
-import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import { PostDataFragmentType } from '@/data/types'
 import { getCatgoryDataFromCategoryFragment } from '@/utils/getCatgoryDataFromCategoryFragment'
 import { getImageDataFromImageFragment } from '@/utils/getImageDataFromImageFragment'
@@ -118,47 +115,5 @@ const Category: FaustTemplate<PageCategoryGetCategoryQuery> = (props) => {
 		</PageLayout>
 	)
 }
-
-Category.variables = ({ id }) => ({
-	id,
-	first: GET_POSTS_FIRST_COMMON,
-	headerLocation: PRIMARY_LOCATION,
-	footerLocation: FOOTER_LOCATION,
-})
-
-Category.query = gql(`
-query PageCategoryGetCategory($id: ID!, $first: Int, $headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!)  {
-    category(id: $id) {
-       ...NcmazFcCategoryFullFieldsFragment
-      posts(first: $first, where: {orderby: {field: DATE, order: DESC}}) {
-        nodes {
-          ...NcmazFcPostCardFields
-        }
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-      }
-    }
-    categories(first:10, where: { orderby: COUNT, order: DESC }) {
-      nodes {
-        ...NcmazFcCategoryFullFieldsFragment
-      }
-    }
-    # common query for all page 
-    generalSettings {
-      ...NcgeneralSettingsFieldsFragment
-    }
-    primaryMenuItems: menuItems(where: { location:  $headerLocation  }, first: 80) {
-      nodes {
-        ...NcPrimaryMenuFieldsFragment
-      }
-    }
-    footerMenuItems: menuItems(where: { location:  $footerLocation  }, first: 40) {
-      nodes {
-        ...NcFooterMenuFieldsFragment
-      }
-    }
- }`)
 
 export default Category

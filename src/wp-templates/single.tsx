@@ -1,4 +1,3 @@
-import { gql } from '../__generated__'
 import {
 	GetPostSiglePageQuery,
 	NcgeneralSettingsFieldsFragmentFragment,
@@ -11,7 +10,6 @@ import SingleType1 from '@/container/singles/single/single'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
 import { Sidebar } from '@/container/singles/Sidebar'
 import PageLayout from '@/container/PageLayout'
-import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { NC_MUTATION_UPDATE_USER_REACTION_POST_COUNT } from '@/fragments/mutations'
@@ -228,46 +226,5 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		</>
 	)
 }
-
-Component.variables = ({ databaseId }, ctx) => {
-	return {
-		databaseId,
-		post_databaseId: Number(databaseId || 0),
-		asPreview: ctx?.asPreview,
-		headerLocation: PRIMARY_LOCATION,
-		footerLocation: FOOTER_LOCATION,
-	}
-}
-
-Component.query = gql(`
-  query GetPostSiglePage($databaseId: ID!, $post_databaseId: Int,$asPreview: Boolean = false, $headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
-    post(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
-		...NcmazFcPostFullVsEditorBlocksNoContentFields
-    }
-    posts(where: {isRelatedOfPostId:$post_databaseId}) {
-      nodes {
-      ...PostCardFieldsNOTNcmazMEDIA
-      }
-    }
-    categories(first:10, where: { orderby: COUNT, order: DESC }) {
-      nodes {
-        ...NcmazFcCategoryFullFieldsFragment
-      }
-    }
-    generalSettings {
-      ...NcgeneralSettingsFieldsFragment
-    }
-    primaryMenuItems: menuItems(where: {location:$headerLocation}, first: 80) {
-      nodes {
-        ...NcPrimaryMenuFieldsFragment
-      }
-    }
-    footerMenuItems: menuItems(where: {location:$footerLocation}, first: 40) {
-      nodes {
-        ...NcFooterMenuFieldsFragment
-      }
-    }
-  }
-`)
 
 export default Component

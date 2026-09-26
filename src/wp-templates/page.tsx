@@ -1,11 +1,9 @@
-import { gql } from '@/__generated__'
 import EntryHeader from '../components/entry-header'
 import {
 	GetPageQuery,
 	NcgeneralSettingsFieldsFragmentFragment,
 } from '../__generated__/graphql'
 import { FaustTemplate, flatListToHierarchical } from '@faustwp/core'
-import { FOOTER_LOCATION, PRIMARY_LOCATION } from '@/contains/menu'
 import PageLayout from '@/container/PageLayout'
 import MyWordPressBlockViewer from '@/components/MyWordPressBlockViewer'
 
@@ -73,58 +71,5 @@ const Page: FaustTemplate<GetPageQuery> = (props) => {
 		</>
 	)
 }
-
-Page.variables = ({ databaseId }, ctx) => {
-	return {
-		databaseId,
-		asPreview: ctx?.asPreview,
-		headerLocation: PRIMARY_LOCATION,
-		footerLocation: FOOTER_LOCATION,
-	}
-}
-
-// Note***: tat ca cac query trong cac page deu phai co generalSettings, no duoc su dung o compoent Wrap
-Page.query = gql(`
-  query GetPage($databaseId: ID!, $asPreview: Boolean = false, $headerLocation: MenuLocationEnum!, $footerLocation: MenuLocationEnum!) {
-    page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
-      title
-      ncPageMeta {
-        isFullWithPage
-      }
-      featuredImage {
-        node {
-          altText
-          sourceUrl
-        }
-      }
-      editorBlocks(flat: true) {
-        __typename
-        renderedHtml
-        clientId
-        parentClientId
-        ...NcmazFaustBlockMagazineFragment
-        ...NcmazFaustBlockTermsFragment
-        ...NcmazFaustBlockCtaFragment
-        ...NcmazFaustBlockGroupFragment
-        ...CoreColumnsFragment
-        ...CoreColumnFragment
-      }
-    }
-    # common query for all page 
-    generalSettings {
-      ...NcgeneralSettingsFieldsFragment
-    }
-    primaryMenuItems: menuItems(where: { location:  $headerLocation  }, first: 80) {
-      nodes {
-        ...NcPrimaryMenuFieldsFragment
-      }
-    }
-    footerMenuItems: menuItems(where: {location:$footerLocation}, first: 40) {
-      nodes {
-        ...NcFooterMenuFieldsFragment
-      }
-    }
-  }
-`)
 
 export default Page
