@@ -35,6 +35,8 @@ export const HeaderSearchForm2 = () => {
 		return (
 			<form
 				className="group relative"
+				toolname="search_articles"
+				tooldescription="Search articles and pages on Rekayasa Sipil."
 				onSubmit={e => {
 					e.preventDefault()
 					router.push('/search/posts/' + e.currentTarget.search.value || '')
@@ -43,6 +45,7 @@ export const HeaderSearchForm2 = () => {
 				<Input
 					type="search"
 					placeholder={T['Type to search...']}
+					toolparamdescription="Search query to look up in articles."
 					className="!w-40 pr-5 group-hover:border-neutral-300 md:!w-full md:pr-10 dark:placeholder:text-neutral-400 dark:group-hover:border-neutral-400"
 					sizeClass="h-[42px] pl-4 py-3"
 					name="search"

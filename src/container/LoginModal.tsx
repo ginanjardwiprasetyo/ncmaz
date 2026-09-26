@@ -72,6 +72,8 @@ const LoginModal: FC<LoginModalProps> = () => {
 				<div className="mt-5 sm:mx-auto sm:mt-10 sm:w-full sm:max-w-sm">
 					<div className="grid gap-6">
 						<form
+							toolname="sign_in"
+							tooldescription="Sign in to a Rekayasa Sipil account."
 							onSubmit={(e) => {
 								e.preventDefault()
 
@@ -113,6 +115,7 @@ const LoginModal: FC<LoginModalProps> = () => {
 									<Label htmlFor="password">{T.Password}</Label>
 									<Input
 										id="password"
+										name="password"
 										type="password"
 										required
 										defaultValue={IS_CHISNGHIAX_DEMO_SITE ? 'demo' : undefined}

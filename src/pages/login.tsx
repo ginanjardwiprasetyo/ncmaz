@@ -37,6 +37,8 @@ export default function Login() {
 			<>
 				<div className="grid gap-6">
 					<form
+						toolname="sign_in"
+						tooldescription="Sign in to a Rekayasa Sipil account."
 						onSubmit={(e) => {
 							e.preventDefault()
 
@@ -76,6 +78,7 @@ export default function Login() {
 								<Label htmlFor="password">{T.Password}</Label>
 								<Input
 									id="password"
+									name="password"
 									type="password"
 									required
 									defaultValue={IS_CHISNGHIAX_DEMO_SITE ? 'demo' : undefined}

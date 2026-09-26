@@ -88,12 +88,17 @@ export default function ResetPassWord() {
 		return (
 			<>
 				<div className="grid gap-6">
-					<form onSubmit={handleRegister}>
+					<form
+						onSubmit={handleRegister}
+						toolname="reset_password"
+						tooldescription="Request a password reset for a Rekayasa Sipil account."
+					>
 						<div className="grid gap-4">
 							<div className="grid gap-1.5">
 								<Label htmlFor="username">{T['Email or username']}</Label>
 								<Input
 									id="username"
+									name="username"
 									placeholder={T['Email or username']}
 									autoCapitalize="none"
 									autoCorrect="off"

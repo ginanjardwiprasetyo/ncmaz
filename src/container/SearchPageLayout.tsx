@@ -53,6 +53,8 @@ const SearchPageLayout: FC<Props> = ({
 					<form
 						className="relative"
 						action="#"
+						toolname="search_articles"
+						tooldescription="Search articles and pages on Rekayasa Sipil."
 						onSubmit={e => {
 							e.preventDefault()
 							const inputNode = document.getElementById(
@@ -70,6 +72,7 @@ const SearchPageLayout: FC<Props> = ({
 							<span className="sr-only">Search all icons</span>
 							<Input
 								id="search-input"
+								name="q"
 								type="search"
 								placeholder={T.pageSearch['Type and press enter']}
 								className="border-opacity-0 text-base shadow-md dark:!bg-neutral-800"

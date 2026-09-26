@@ -146,12 +146,17 @@ export default function SignUp() {
 
 	const renderForm = () => {
 		return (
-			<form onSubmit={handleRegister}>
+			<form
+				onSubmit={handleRegister}
+				toolname="create_account"
+				tooldescription="Create a new Rekayasa Sipil account with username and email."
+			>
 				<div className="grid gap-4">
 					<div className="grid gap-1.5">
 						<Label htmlFor="username">{T.Username}</Label>
 						<Input
 							id="username"
+							name="username"
 							type="text"
 							autoComplete="username"
 							required
@@ -162,6 +167,7 @@ export default function SignUp() {
 						<Label htmlFor="email">{T.Email}</Label>
 						<Input
 							id="email"
+							name="email"
 							autoCapitalize="none"
 							autoComplete="email"
 							autoCorrect="off"

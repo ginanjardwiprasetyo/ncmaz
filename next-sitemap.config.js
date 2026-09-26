@@ -6,6 +6,8 @@ module.exports = {
 	siteUrl: SITE_URL,
 	generateRobotsTxt: true,
 	exclude: [
+		'/login',
+		'/sign-up',
 		'/submission',
 		'/dashboard/posts/published',
 		'/dashboard/posts/draft',

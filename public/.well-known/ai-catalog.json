@@ -1,0 +1,23 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Rekayasa Sipil",
+    "identifier": "https://rekayasa-sipil.my.id",
+    "documentationUrl": "https://rekayasa-sipil.my.id/llms.txt"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:rekayasa-sipil:content:website",
+      "displayName": "Rekayasa Sipil",
+      "type": "text/html",
+      "url": "https://rekayasa-sipil.my.id/",
+      "description": "Situs belajar teknik sipil berbahasa Indonesia: artikel, tutorial, dan referensi untuk mahasiswa dan praktisi.",
+      "tags": ["civil-engineering", "education", "indonesian"],
+      "representativeQueries": [
+        "Cari artikel teknik sipil tentang struktur dan geoteknik",
+        "Temukan materi belajar konstruksi bangunan"
+      ],
+      "updatedAt": "2026-09-26T00:00:00Z"
+    }
+  ]
+}

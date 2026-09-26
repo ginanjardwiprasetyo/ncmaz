@@ -1,0 +1,21 @@
+# Rekayasa Sipil
+
+> Pusat belajar teknik sipil: materi, referensi, dan sumber belajar untuk mahasiswa dan praktisi.
+
+Situs berisi artikel, tutorial, dan referensi teknik sipil berbahasa Indonesia.
+
+## Konten utama
+
+- [Beranda](https://rekayasa-sipil.my.id/)
+- [Semua artikel](https://rekayasa-sipil.my.id/posts/)
+- [Halaman kontak](https://rekayasa-sipil.my.id/contact/)
+- [RSS feed](https://rekayasa-sipil.my.id/api/feeds/rss.xml)
+- [JSON feed](https://rekayasa-sipil.my.id/api/feeds/feed.json)
+
+## Kategori
+
+- [Geoteknik](https://rekayasa-sipil.my.id/category/geoteknik/)
+- [Berita](https://rekayasa-sipil.my.id/category/berita/)
+- [Blog](https://rekayasa-sipil.my.id/category/blog/)
+- [Keairan](https://rekayasa-sipil.my.id/category/keairan/)
+- [Lowongan](https://rekayasa-sipil.my.id/category/lowongan/)

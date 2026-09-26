@@ -140,6 +140,8 @@ const NavMobile: React.FC<NavMobileProps> = ({
 					e.preventDefault()
 					router.push('/search/posts/' + e.currentTarget.mbsearch.value || '')
 				}}
+				toolname="search_articles"
+				tooldescription="Search articles and pages on Rekayasa Sipil."
 				className="flex-1 text-neutral-900 dark:text-neutral-200"
 			>
 				<div className="relative flex h-full rounded-xl bg-neutral-50 dark:bg-neutral-800">
@@ -148,6 +150,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
 						name="mbsearch"
 						id="mbsearch"
 						aria-label="Search"
+						toolparamdescription="Search query to look up in articles."
 						placeholder="Type and press enter"
 						className="w-full flex-1 border-none bg-transparent py-3.5 pe-10 text-sm focus:outline-none focus:ring-0"
 					/>

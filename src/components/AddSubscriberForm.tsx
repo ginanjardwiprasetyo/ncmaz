@@ -41,6 +41,8 @@ const AddSubscriberForm: FC<Props> = ({ className = '' }) => {
 	return (
 		<form
 			className={`relative ${className}`}
+			toolname="subscribe_newsletter"
+			tooldescription="Subscribe to the Rekayasa Sipil newsletter by email."
 			onSubmit={(e) => {
 				e.preventDefault()
 				if (!email) {
@@ -61,7 +63,9 @@ const AddSubscriberForm: FC<Props> = ({ className = '' }) => {
 				<Input
 					required
 					aria-required
+					name="user_email"
 					placeholder={NC_SITE_SETTINGS.subcription_widget?.placeholder}
+					toolparamdescription="Email address to subscribe with."
 					type="email"
 					onChange={(e) => setemail(e.target.value)}
 				/>

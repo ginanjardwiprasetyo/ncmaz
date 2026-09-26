@@ -47,7 +47,7 @@ export async function myGetPaths() {
 	}
 
 	return posts.map((page) => ({
-		params: { wordpressNode: [page.slug] },
+		params: { wordpressNode: page.slug.split('/').filter(Boolean) },
 	}))
 }
 

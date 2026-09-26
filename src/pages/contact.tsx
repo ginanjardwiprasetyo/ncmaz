@@ -103,6 +103,8 @@ const PageContact = () => {
 					className="grid grid-cols-1 gap-6"
 					action="#"
 					method="post"
+					toolname="send_contact_message"
+					tooldescription="Send a contact message to Rekayasa Sipil with name, email, and message."
 					onSubmit={(e) => {
 						e.preventDefault()
 						const form = e.target as HTMLFormElement

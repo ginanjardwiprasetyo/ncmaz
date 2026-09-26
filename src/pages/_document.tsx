@@ -61,6 +61,7 @@ export default class Document extends NextDocument {
 						href={v('/favicons/favicon-16x16.png')}
 					/>
 					<link rel="manifest" href={v('/favicons/site.webmanifest')} />
+					<link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
 					<link
 						rel="mask-icon"
 						href={v('/favicons/safari-pinned-tab.svg')}

@@ -95,6 +95,8 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
 	return (
 		<form
 			action="#"
+			toolname="post_comment"
+			tooldescription="Post a comment on a Rekayasa Sipil article."
 			onSubmit={(e) => {
 				e.preventDefault()
 				if (isLoading || !isReady) {
@@ -127,7 +129,9 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
 			className={`nc-SingleCommentForm ${className}`}
 		>
 			<Textarea
+				name="content"
 				placeholder={T.pageSingle['Add to discussion']}
+				toolparamdescription="Comment text to post on the article."
 				ref={textareaRef}
 				required
 				defaultValue={defaultValue}
@@ -146,6 +150,7 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
 						<Input
 							placeholder="Your name"
 							id="username"
+							name="username"
 							type="text"
 							autoComplete="username"
 							required
@@ -155,6 +160,7 @@ const SingleCommentForm: FC<SingleCommentFormProps> = ({
 						<Label htmlFor="email">{T.Email}</Label>
 						<Input
 							id="email"
+							name="email"
 							autoCapitalize="none"
 							autoComplete="email"
 							autoCorrect="off"
