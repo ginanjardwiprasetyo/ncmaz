@@ -22,6 +22,18 @@ module.exports = withFaust({
 			},
 		]
 	},
+	async rewrites() {
+		// proxy GraphQL same-origin: like anonim tidak bergantung pada koneksi
+		// browser->Pantheon (CORS/H3/blokir ISP) — browser cukup bicara ke Vercel
+		const wp = process.env.NEXT_PUBLIC_WORDPRESS_URL?.replace(/\/+$/, '')
+		if (!wp) return []
+		return [
+			{
+				source: '/wp-graphql/',
+				destination: `${wp}/index.php?graphql`,
+			},
+		]
+	},
 	images: {
 		loader: 'custom',
 		loaderFile: './src/components/MyImage.loader.ts',

@@ -1,13 +1,14 @@
-import { getWordPressUrlNoSlash } from './getWordPressUrlNoSlash'
 import { getAnonymousUserId } from './anonymousUserId'
 
 type Result = { result: string; new_count: number | null }
 
-export async function updateAnonymousLikeCount(
+async function callOnce(
 	postId: number,
 	number: 'ADD_1' | 'REMOVE_1',
-): Promise<Result> {
-	const res = await fetch(`${getWordPressUrlNoSlash()}/index.php?graphql`, {
+	userId: number,
+): Promise<Result | null> {
+	// same-origin via rewrite /wp-graphql/ (lihat next.config.js) — tanpa CORS
+	const res = await fetch('/wp-graphql/', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
@@ -18,9 +19,27 @@ export async function updateAnonymousLikeCount(
           ) { result new_count }
         }
       `,
-			variables: { post_id: postId, user_id: getAnonymousUserId() },
+			variables: { post_id: postId, user_id: userId },
 		}),
 	})
-	const json = await res.json()
-	return json?.data?.ncmazFaustUpdateUserReactionPostCount
+	const json = await res.json().catch(() => null)
+	return json?.data?.ncmazFaustUpdateUserReactionPostCount || null
+}
+
+export async function updateAnonymousLikeCount(
+	postId: number,
+	number: 'ADD_1' | 'REMOVE_1',
+): Promise<Result | null> {
+	const userId = getAnonymousUserId()
+	// ponytail: 1 retry singkat untuk gangguan transient (jaringan/edge)
+	for (let attempt = 0; attempt < 2; attempt++) {
+		try {
+			const result = await callOnce(postId, number, userId)
+			if (result) return result
+		} catch {
+			// lanjut retry
+		}
+		await new Promise((r) => setTimeout(r, 600))
+	}
+	return null
 }
