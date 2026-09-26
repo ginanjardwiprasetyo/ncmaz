@@ -15,6 +15,8 @@ module.exports = withFaust({
 	productionBrowserSourceMaps: true,
 	experimental: {
 		typedRoutes: false,
+		// inline critical CSS, sisanya load async -> hilangkan render-blocking request
+		optimizeCss: true,
 	},
 	async redirects() {
 		return [
