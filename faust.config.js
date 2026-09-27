@@ -1,6 +1,13 @@
-import { setConfig } from "@faustwp/core";
+import { setConfig, hooks } from "@faustwp/core";
 import templates from "./src/wp-templates";
 import possibleTypes from "./possibleTypes.json";
+
+// Cloudflare di origin WP melempar challenge 403 (HTML tanpa header CORS) untuk
+// request dari browser -> Apollo gagal total: "TypeError: Failed to fetch".
+// Request dari server lolos, jadi browser dialihkan ke proxy same-origin.
+hooks.addFilter("graphqlEndpoint", "ncmaz/wp-graphql-proxy", (endpoint) =>
+  typeof window === "undefined" ? endpoint : "/api/wp-graphql/"
+);
 
 /**
  * @type {import('@faustwp/core').FaustConfig}
