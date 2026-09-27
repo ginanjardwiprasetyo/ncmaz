@@ -13,7 +13,11 @@ hooks.addFilter("graphqlEndpoint", "ncmaz/wp-graphql-proxy", (endpoint) =>
  * @type {import('@faustwp/core').FaustConfig}
  **/
 export default setConfig({
-  templates,
-  possibleTypes,
-  usePersistedQueries: true,
+	templates,
+	possibleTypes,
+	usePersistedQueries: true,
+	// ponytail: query GraphQL harus POST. GET di-cache Cloudflare per-URL
+	// (cf-cache-status HIT) sehingga update konten di WP tidak sampai ke SSR
+	// selama TTL edge masih berlaku -> /helps/ nyangkut konten lama berjam-jam.
+	useGETForQueries: false,
 });

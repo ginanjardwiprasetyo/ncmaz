@@ -15,7 +15,10 @@
 		"title": "Join our newsletter 🎉",
 		"description": "Read and share new perspectives on just about any topic. Everyone’s welcome.",
 		"right_image": "/images/SVG-subcribe2.png",
-		"features_list": ["Create a free account.", "Write your stories."]
+		"features_list": [
+			"Create a free account.",
+			"Write your stories."
+		]
 	},
 	"top_banner": {
 		"enable": false,
@@ -70,7 +73,7 @@
 		}
 	},
 	"site_footer": {
-		"all_rights_reserved_text": "© 2025 Rekayasa Sipil. All rights reserved."
+		"all_rights_reserved_text": "© 2026 Rekayasa Sipil. All rights reserved."
 	},
 	"single_page": {
 		"show_view_cout": true,
@@ -245,7 +248,7 @@
 		"sub_title": "Read and share new perspectives on just about any topic. Everyone’s welcome."
 	},
 	"cookies_policy_page": {
-		"uri": "#"
+		"uri": "/privacy-policy"
 	},
 	"privacy_policy_page": {
 		"uri": "/privacy-policy",

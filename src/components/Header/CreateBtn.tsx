@@ -24,6 +24,11 @@ const CreateBtn: FC<Props> = ({ className = 'hidden md:block ' }) => {
 		return null
 	}
 
+	// hanya untuk user yang sudah login
+	if (!(isReady && isAuthenticated === true)) {
+		return null
+	}
+
 	return (
 		<div className={`LangDropdown ${className}`}>
 			<Link

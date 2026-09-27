@@ -340,6 +340,7 @@ export default function AvatarDropdown({ className = '' }: Props) {
 
 										{/* ------------------ 1 --------------------- */}
 										{isReady &&
+											isAuthenticated &&
 											NC_SITE_SETTINGS['submissions-settings']?.enable &&
 											renderCreatePost()}
 
@@ -353,7 +354,7 @@ export default function AvatarDropdown({ className = '' }: Props) {
 										{isAuthenticated && renderMenuWishlist()}
 
 										{/* ------------------ 4 --------------------- */}
-										{renderMenuBookmark()}
+										{isAuthenticated && renderMenuBookmark()}
 
 										<div className="w-full border-b border-neutral-200 dark:border-neutral-700" />
 
