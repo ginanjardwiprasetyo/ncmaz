@@ -71,6 +71,10 @@ export default class Document extends NextDocument {
 					<meta name="apple-mobile-web-app-title" content="Ncmaz Nextjs" />
 					<meta name="application-name" content="Ncmaz Nextjs" />
 					<meta name="theme-color" content="#172A53" />
+					<meta
+						name="google-adsense-account"
+						content="ca-pub-6364348515009111"
+					/>
 					<script
 						dangerouslySetInnerHTML={{
 							__html: `
