@@ -67,7 +67,7 @@ const CreateNewPostEditor: FC<Props> = ({
 		objGalleryImgs: undefined,
 		isAllowComments: true,
 		timeSchedulePublication: undefined,
-		showRightSidebar: true,
+		showRightSidebar: false,
 	},
 }) => {
 	const { isReady, isAuthenticated } = useSelector(
