@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import ButtonPrimary from '@/components/Button/ButtonPrimary'
 import TitleEditor from './TitleEditor'
 import { debounce } from 'lodash'
@@ -117,6 +117,8 @@ const CreateNewPostEditor: FC<Props> = ({
 	//
 	const [newUpdatedUri, setNewUpdatedUri] = useState('')
 	const [isSubmitSuccess, setIsSubmitSuccess] = useState(false)
+	// ponytail: blocks pending debounce writes from resurrecting the draft after submit
+	const isSubmittedRef = useRef(false)
 
 	//
 
@@ -134,6 +136,9 @@ const CreateNewPostEditor: FC<Props> = ({
 		name: (typeof stateKeys)[number],
 		value: unknown,
 	) => {
+		if (isSubmittedRef.current) {
+			return
+		}
 		localStorage.setItem(
 			localStoragePath,
 			JSON.stringify({
@@ -178,6 +183,8 @@ const CreateNewPostEditor: FC<Props> = ({
 		{
 			client,
 			onCompleted: (data) => {
+				isSubmittedRef.current = true
+				localStorage.removeItem(localStoragePath)
 				setIsSubmitSuccess(true)
 				toast.success(T.pageSubmission['Created new post successfully'])
 
@@ -204,6 +211,8 @@ const CreateNewPostEditor: FC<Props> = ({
 	] = useMutation(NC_MUTATION_UPDATE_POST, {
 		client,
 		onCompleted: (data) => {
+			isSubmittedRef.current = true
+			localStorage.removeItem(localStoragePath)
 			setIsSubmitSuccess(true)
 			toast.success(T.pageSubmission['Update post successfully'])
 			setNewUpdatedUri(`/?p=${data?.updatePost?.post?.databaseId}`)
@@ -469,9 +478,7 @@ const CreateNewPostEditor: FC<Props> = ({
 		)
 	}
 
-	const enableRevertBtn =
-		localStoragePath.startsWith('submission_page__edit__') &&
-		!!localStorage.getItem(localStoragePath)?.length
+	const enableRevertBtn = !!localStorage.getItem(localStoragePath)?.length
 
 	return (
 		<>
