@@ -44,6 +44,10 @@ const Category: FaustTemplate<PageCategoryGetCategoryQuery> = (props) => {
 			pageFeaturedImageUrl={featuredImageMeta?.sourceUrl}
 			pageTitle={'Category ' + name}
 			pageDescription={description || ''}
+			pageBreadcrumb={[
+				{ name: 'Home', pathname: '/' },
+				{ name },
+			]}
 			generalSettings={
 				props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 			}

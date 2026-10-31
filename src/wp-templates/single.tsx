@@ -8,6 +8,7 @@ import { FaustTemplate } from '@faustwp/core'
 import SingleContent from '@/container/singles/SingleContent'
 import SingleType1 from '@/container/singles/single/single'
 import { getPostDataFromPostFragment } from '@/utils/getPostDataFromPostFragment'
+import { toSitePath } from '@/utils/structuredData'
 import { Sidebar } from '@/container/singles/Sidebar'
 import PageLayout from '@/container/PageLayout'
 import dynamic from 'next/dynamic'
@@ -81,7 +82,14 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 		featuredImage,
 		databaseId,
 		excerpt,
+		date,
+		modified,
+		uri,
+		author,
+		categories,
 	} = getPostDataFromPostFragment(_post)
+
+	const firstCategory = categories?.nodes?.[0]
 
 	//
 	const {} = useGetPostsNcmazMetaByIds({
@@ -181,6 +189,23 @@ const Component: FaustTemplate<GetPostSiglePageQuery> = (props) => {
 				pageFeaturedImageUrl={featuredImage?.sourceUrl}
 				pageTitle={title}
 				pageDescription={excerpt || ''}
+				pageArticle={{
+					date,
+					modified,
+					authorName: author?.name,
+				}}
+				pageBreadcrumb={[
+					{ name: 'Home', pathname: '/' },
+					...(firstCategory
+						? [
+								{
+									name: firstCategory.name,
+									pathname: toSitePath(firstCategory.uri),
+								},
+							]
+						: []),
+					{ name: title },
+				]}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

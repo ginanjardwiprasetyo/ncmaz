@@ -1,4 +1,5 @@
 import { NC_SITE_SETTINGS } from '@/contains/site-settings'
+import { getSiteJsonLd } from '@/utils/structuredData'
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
 
 const FAVICON_VERSION = 4
@@ -25,23 +26,28 @@ export default class Document extends NextDocument {
 			>
 				<Head>
 					<title>{SITE_TITLE}</title>
-					<link
-						href={`${SITE_URL}/api/feeds/feed.json`}
-						rel="alternate"
-						type="application/feed+json"
-						title={SITE_TITLE + ' JSON Feed'}
+					{/* preconnect: 41 gambar site ini semuanya lewat wsrv.nl, buka koneksi
+					    saat HTML masih diparse agar LCP tak menunggu DNS+TLS */}
+					<link rel="preconnect" href="https://wsrv.nl" />
+					{/* base style: bg/teks benar sejak paint pertama — critical CSS tidak
+					    memuat varian .dark:, jadi mode gelap sempat tampil putih */}
+					<style
+						dangerouslySetInnerHTML={{
+							__html:
+								'body{background:#fff;color:#171717}html.dark body{background:#171717;color:#f5f5f5}',
+						}}
+					/>
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: JSON.stringify(getSiteJsonLd()).replace(/</g, '\\u003c'),
+						}}
 					/>
 					<link
-						href={`${SITE_URL}/api/feeds/rss.xml`}
+						href={`${SITE_URL}/feed.xml`}
 						rel="alternate"
 						type="application/rss+xml"
 						title={SITE_TITLE + ' XML Feed'}
-					/>
-					<link
-						href={`${SITE_URL}/api/feeds/feed.atom`}
-						rel="alternate"
-						type="application/atom+xml"
-						title={SITE_TITLE + ' Atom Feed'}
 					/>
 					<link
 						rel="apple-touch-icon"

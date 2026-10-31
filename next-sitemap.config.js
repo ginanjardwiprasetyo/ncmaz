@@ -26,10 +26,11 @@ module.exports = {
 		'/dashboard/edit-profile',
 		'/dashboard/posts',
 		'/wordpress-sitemap.xml', // Keep this to exclude the WordPress sitemap itself
+		'/feed.xml',
 	],
-	robotsTxtOptions: {
-		additionalSitemaps: [`${SITE_URL}/wordpress-sitemap.xml`],
-	},
+		robotsTxtOptions: {
+			additionalSitemaps: [`${SITE_URL}/wordpress-sitemap.xml`],
+		},
 	transform: async (config, path) => {
 		// Get the current date in W3C datetime format (sitemap protocol)
 		const formattedDate = new Date().toISOString()

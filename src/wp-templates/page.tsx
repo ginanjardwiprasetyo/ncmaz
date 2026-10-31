@@ -19,6 +19,8 @@ const Page: FaustTemplate<GetPageQuery> = (props) => {
 
 	const isGutenbergPage =
 		!!props.__SEED_NODE__?.isFrontPage || ncPageMeta?.isFullWithPage
+	// halaman depan sudah diwakili WebSite, breadcrumb Home>Home cuma noise
+	const isFrontPage = !!props.__SEED_NODE__?.isFrontPage
 
 	const blocks = flatListToHierarchical(editorBlocks as any, {
 		idKey: 'clientId',
@@ -32,6 +34,15 @@ const Page: FaustTemplate<GetPageQuery> = (props) => {
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={featuredImage?.node?.sourceUrl}
 				pageTitle={title}
+				pageArticle={{ type: 'WebPage' }}
+				pageBreadcrumb={
+					isFrontPage
+						? undefined
+						: [
+								{ name: 'Home', pathname: '/' },
+								{ name: title || '' },
+							]
+				}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

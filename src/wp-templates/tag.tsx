@@ -37,6 +37,10 @@ const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
         pageFeaturedImageUrl={null}
         pageTitle={"Tag " + name}
         pageDescription={description || ""}
+        pageBreadcrumb={[
+          { name: "Home", pathname: "/" },
+          { name },
+        ]}
         generalSettings={
           props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
         }

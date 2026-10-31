@@ -9,8 +9,7 @@ Situs berisi artikel, tutorial, dan referensi teknik sipil berbahasa Indonesia.
 - [Beranda](https://rekayasa-sipil.my.id/)
 - [Semua artikel](https://rekayasa-sipil.my.id/posts/)
 - [Halaman kontak](https://rekayasa-sipil.my.id/contact/)
-- [RSS feed](https://rekayasa-sipil.my.id/api/feeds/rss.xml)
-- [JSON feed](https://rekayasa-sipil.my.id/api/feeds/feed.json)
+- [RSS feed](https://rekayasa-sipil.my.id/feed.xml)
 
 ## Kategori
 

@@ -30,7 +30,7 @@ import DashboardLayout, {
 	TDashBoardEditProfileTab,
 } from '@/container/DashboardLayout'
 import getTrans from '@/utils/getTrans'
-import { decode } from 'html-entities'
+import decode from '@/utils/decodeEntities'
 import Button from '@/components/Button/Button'
 
 const T = getTrans()

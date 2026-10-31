@@ -153,6 +153,10 @@ const Page: FaustPage<PostsFilterPageQueryGetPostsQuery> = (props) => {
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={null}
 				pageTitle={T.Posts}
+				pageBreadcrumb={[
+					{ name: 'Home', pathname: '/' },
+					{ name: T.Posts },
+				]}
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}
@@ -370,6 +374,12 @@ Page.query = gql(`
 `)
 
 export function getServerSideProps(ctx: GetServerSidePropsContext) {
+	// konten bersifat publik; tanpa header ini Vercel selalu MISS + menunggu
+	// GraphQL WP (~2-4s) — s-maxage bikin request dingin dilayani edge cache
+	ctx.res.setHeader(
+		'Cache-Control',
+		'public, s-maxage=60, stale-while-revalidate=300',
+	)
 	return getNextServerSideProps(ctx, {
 		Page,
 	})

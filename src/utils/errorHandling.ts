@@ -1,5 +1,5 @@
 import { ApolloError } from '@apollo/client'
-import { decode } from 'html-entities'
+import decode from '@/utils/decodeEntities'
 import toast from 'react-hot-toast'
 
 export default function errorHandling(error: ApolloError) {

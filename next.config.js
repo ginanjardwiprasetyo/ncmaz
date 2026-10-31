@@ -126,4 +126,14 @@ module.exports = withFaust({
 			},
 		]
 	},
+	webpack(config, { isServer, webpack }) {
+		if (!isServer) {
+			// barrel @faustwp/core ikut mengekspor helper sitemap server-only
+			// (fast-xml-parser ~64KB sumber) yang tak pernah dipanggil di browser
+			config.plugins.push(
+				new webpack.IgnorePlugin({ resourceRegExp: /server\/sitemaps\// }),
+			)
+		}
+		return config
+	},
 })
