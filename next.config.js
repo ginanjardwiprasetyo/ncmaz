@@ -128,10 +128,20 @@ module.exports = withFaust({
 	},
 	webpack(config, { isServer, webpack }) {
 		if (!isServer) {
-			// barrel @faustwp/core ikut mengekspor helper sitemap server-only
-			// (fast-xml-parser ~64KB sumber) yang tak pernah dipanggil di browser
+			// barrel @faustwp/core ikut mengimpor helper sitemap server-only
+			// (fast-xml-parser ~64KB sumber) yang tak pernah dipanggil di browser.
+			// IgnorePlugin tidak bisa: modul tetap dievaluasi dan melempar error
+			// -> _app crash. Ganti dengan stub inert.
 			config.plugins.push(
-				new webpack.IgnorePlugin({ resourceRegExp: /server\/sitemaps\// }),
+				new webpack.NormalModuleReplacementPlugin(
+					/server\/sitemaps\//,
+					(resource) => {
+						resource.request = require('path').join(
+							__dirname,
+							'faust-sitemaps-client-stub.js',
+						)
+					},
+				),
 			)
 		}
 		return config
