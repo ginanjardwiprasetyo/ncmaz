@@ -54,13 +54,13 @@
 	"site_socials": [
 		{
 			"name": "instagram",
-			"url": "https://instagram.com/rekayasa.sipil",
+			"url": "https://instagram.com/rekayasa_sipil",
 			"icon": "/images/socials/instagram.svg",
 			"description": "Follow us on Instagram"
 		},
 		{
 			"name": "tiktok",
-			"url": "https://www.tiktok.com/rekayasa.sipil",
+			"url": "https://www.tiktok.com/@rekayasa_sipil",
 			"icon": "/images/socials/tiktok.svg",
 			"description": "Follow us on Tiktok"
 		}

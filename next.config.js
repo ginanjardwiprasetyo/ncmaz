@@ -17,6 +17,10 @@ module.exports = withFaust({
 		typedRoutes: false,
 		// inline critical CSS, sisanya load async -> hilangkan render-blocking request
 		optimizeCss: true,
+		// WP asal kena rate limit (429) saat ~60 halaman di-prerender paralel;
+		// 1 worker + retry -> build stabil walau lebih lambat sedikit
+		cpus: 1,
+		staticGenerationRetryAttempts: 3,
 	},
 	async redirects() {
 		return [

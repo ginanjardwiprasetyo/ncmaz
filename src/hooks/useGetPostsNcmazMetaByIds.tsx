@@ -33,6 +33,8 @@ export default function useGetPostsNcmazMetaByIds(props: Props) {
 	// With the ISR feature of nextjs, when liking, saving, updating... posts, it can take up to 15 minutes for the data to update
 	// This affects post-like, so every time a post is rendered, you need to retrieve the PostLike data (count, isLiked,...)
 	// ponytail: gate dihapus — tamu (anonim) juga perlu count segar, API publik
+	// requestIdleCallback: jangan rebut main thread saat hydration/interaksi
+	// pertama (INP); kalau ada input, browser menunda callback-nya sendiri
 	useEffect(() => {
 		if (isFetchAPI || !IDsString) {
 			return
@@ -56,7 +58,21 @@ export default function useGetPostsNcmazMetaByIds(props: Props) {
 				})
 		}
 
-		getPosts()
+		const w = window as any
+		const idleFn = w.requestIdleCallback as
+			| ((cb: () => void) => number)
+			| undefined
+		const cancelFn = w.cancelIdleCallback as ((id: number) => void) | undefined
+		const idleId = idleFn
+			? idleFn(() => void getPosts())
+			: (setTimeout(getPosts, 200) as unknown as number)
+		return () => {
+			if (idleFn) {
+				cancelFn?.(idleId)
+			} else {
+				clearTimeout(idleId)
+			}
+		}
 	}, [IDsString, isLogedIn, isFetchAPI])
 
 	useEffect(() => {
