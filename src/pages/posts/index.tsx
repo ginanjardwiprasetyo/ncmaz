@@ -153,6 +153,7 @@ const Page: FaustPage<PostsFilterPageQueryGetPostsQuery> = (props) => {
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={null}
 				pageTitle={T.Posts}
+				pageDescription="Daftar lengkap artikel teknik sipil, diurutkan dari yang terbaru dan bisa difilter berdasarkan kategori, tag, dan penulis."
 				pageBreadcrumb={[
 					{ name: 'Home', pathname: '/' },
 					{ name: T.Posts },
@@ -375,10 +376,12 @@ Page.query = gql(`
 
 export function getServerSideProps(ctx: GetServerSidePropsContext) {
 	// konten bersifat publik; tanpa header ini Vercel selalu MISS + menunggu
-	// GraphQL WP (~2-4s) — s-maxage bikin request dingin dilayani edge cache
+	// GraphQL WP (~2-4s) — s-maxage bikin request dingin dilayani edge cache.
+	// 60s terlalu pendek: audit menukan /posts/ ~3,3s karena sering MISS;
+	// 1h cukup karena halaman arsip ini jarang berubah.
 	ctx.res.setHeader(
 		'Cache-Control',
-		'public, s-maxage=60, stale-while-revalidate=300',
+		'public, s-maxage=3600, stale-while-revalidate=86400',
 	)
 	return getNextServerSideProps(ctx, {
 		Page,

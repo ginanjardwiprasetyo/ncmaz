@@ -63,6 +63,7 @@ const AuthorPostsChild: FaustPage<GetAuthorWithPostsQuery> = (props) => {
 						?.sourceUrl || null
 				}
 				pageTitle={name}
+				pageRobots="noindex,follow"
 				generalSettings={
 					props.data?.generalSettings as NcgeneralSettingsFieldsFragmentFragment
 				}

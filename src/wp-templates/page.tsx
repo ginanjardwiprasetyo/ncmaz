@@ -17,6 +17,19 @@ const Page: FaustTemplate<GetPageQuery> = (props) => {
 	const { title, editorBlocks, featuredImage, ncPageMeta } =
 		props.data?.page || {}
 
+	// Schema WP live tak menyediakan excerpt pada Page, jadi deskripsi meta
+	// diambil dari teks blok halaman — unik per halaman, bukan kembaran
+	// deskripsi situs (temuan audit).
+	const contentText = (editorBlocks || [])
+		.map((block) => (block as { renderedHtml?: string | null })?.renderedHtml || '')
+		.join(' ')
+		.replace(/<[^>]+>/g, ' ')
+		.replace(/&[a-z#0-9]+;/gi, ' ')
+		.replace(/\s+/g, ' ')
+		.trim()
+		.slice(0, 160)
+		.replace(/\s+\S*$/, '')
+
 	const isGutenbergPage =
 		!!props.__SEED_NODE__?.isFrontPage || ncPageMeta?.isFullWithPage
 	// halaman depan sudah diwakili WebSite, breadcrumb Home>Home cuma noise
@@ -34,6 +47,7 @@ const Page: FaustTemplate<GetPageQuery> = (props) => {
 				footerMenuItems={props.data?.footerMenuItems?.nodes || []}
 				pageFeaturedImageUrl={featuredImage?.node?.sourceUrl}
 				pageTitle={title}
+				pageDescription={isFrontPage ? undefined : contentText || undefined}
 				pageArticle={{ type: 'WebPage' }}
 				pageBreadcrumb={
 					isFrontPage

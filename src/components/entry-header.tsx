@@ -7,7 +7,7 @@ type EntryHeaderProps = {
 export default function EntryHeader({ title, date, author }: EntryHeaderProps) {
   return (
     <div className="text-center mb-10">
-      {title && <h2 className="text-3xl xl:text-4xl">{title}</h2>}
+      {title && <h1 className="text-3xl xl:text-4xl">{title}</h1>}
 
       {date && author && (
         <div className="text-sm mt-5">

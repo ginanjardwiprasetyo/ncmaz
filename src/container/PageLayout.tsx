@@ -32,6 +32,8 @@ interface Props {
   };
   /** item terakhir boleh tanpa pathname — diisi path halaman sekarang */
   pageBreadcrumb?: BreadcrumbItem[];
+  /** mis. "noindex,follow" untuk archive tipis */
+  pageRobots?: string | null;
 }
 
 const MAX_TITLE_LENGTH = 60;
@@ -46,19 +48,25 @@ const PageLayout: FC<Props> = ({
   pageDescription,
   pageArticle,
   pageBreadcrumb,
+  pageRobots,
 }) => {
   const fullTitle = (pageTitle || "") + " - " + (generalSettings?.title || "");
   const displayTitle = fullTitle.length > MAX_TITLE_LENGTH
     ? fullTitle.substring(0, MAX_TITLE_LENGTH - 3) + "..."
     : fullTitle;
 
+  const canonicalPath = useCanonicalPath();
+
+  // Deskripsi site hanya untuk homepage. Halaman lain tanpa deskripsi sendiri
+  // biarkan kosong agar Google membuat snippet dari kontennya (bukan 19 meta
+  // description kembar seperti temuan audit).
   const description =
     pageDescription ||
-    generalSettings?.description ||
-    NC_SITE_SETTINGS.site_info?.site_description ||
-    "";
-
-  const canonicalPath = useCanonicalPath();
+    (canonicalPath === "/"
+      ? generalSettings?.description ||
+        NC_SITE_SETTINGS.site_info?.site_description ||
+        ""
+      : "");
   const breadcrumb = (pageBreadcrumb || []).map((item, index, arr) =>
     index === arr.length - 1 && !item.pathname
       ? { ...item, pathname: canonicalPath }
@@ -92,6 +100,7 @@ const PageLayout: FC<Props> = ({
         publishedTime={pageArticle?.date}
         modifiedTime={pageArticle?.modified}
         structuredData={structuredData}
+        robots={pageRobots}
       />
 
       <SiteHeader

@@ -30,6 +30,14 @@ module.exports = {
 	],
 		robotsTxtOptions: {
 			additionalSitemaps: [`${SITE_URL}/wordpress-sitemap.xml`],
+			// varian filter /posts/ tak perlu dipetakan crawler (temuan audit)
+			policies: [
+				{
+					userAgent: '*',
+					allow: '/',
+					disallow: ['/*?field=', '/*?search='],
+				},
+			],
 		},
 	transform: async (config, path) => {
 		// Get the current date in W3C datetime format (sitemap protocol)

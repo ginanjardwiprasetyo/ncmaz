@@ -22,6 +22,8 @@ interface Props {
 	ogType?: 'website' | 'article'
 	publishedTime?: string | null
 	modifiedTime?: string | null
+	/** e.g. "noindex,follow" — archive tipis tak perlu bersaing di SERP */
+	robots?: string | null
 	/** Array skema.org (Article, BreadcrumbList, ...) — di-stringify apa adanya. */
 	structuredData?: object[] | null
 }
@@ -45,6 +47,7 @@ export default function SEO({
 	ogType,
 	publishedTime,
 	modifiedTime,
+	robots,
 	structuredData,
 }: Props) {
 	if (
@@ -69,6 +72,7 @@ export default function SEO({
 		<>
 			<Head>
 				<link rel="canonical" href={canonical} />
+				{!!robots && <meta name="robots" content={robots} />}
 				<meta property="og:type" content={ogType || 'website'} />
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta property="og:url" content={pageUrl} />

@@ -37,6 +37,7 @@ const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
         pageFeaturedImageUrl={null}
         pageTitle={"Tag " + name}
         pageDescription={description || ""}
+        pageRobots="noindex,follow"
         pageBreadcrumb={[
           { name: "Home", pathname: "/" },
           { name },
@@ -66,9 +67,9 @@ const Tag: FaustTemplate<PageTagGetTagQuery> = (props) => {
               {/*  */}
               <div className="flex-grow">
                 <div className="max-w-screen-md space-y-3.5 ">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold">
                     <span>{name}</span>
-                  </h2>
+                  </h1>
                   <div className="flex items-center text-sm font-medium space-x-2 rtl:space-x-reverse cursor-pointer text-neutral-500 dark:text-neutral-400 ">
                     <FireIcon className="w-5 h-5" />
                     <span className="text-neutral-700 dark:text-neutral-300">
